@@ -2,10 +2,10 @@
  * @file compressor.cpp
  * @brief Исполняемый файл для сжатия строки.
  */
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 #include <spdlog/spdlog.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "libcompressor/libcompressor.hpp"
 /**
@@ -14,37 +14,36 @@
  * @brief Сжимает строку
  */
 int main(int argc, char** argv) {
-    if (argc != 3) {
-        spdlog::error("Not enough arguments(should be 2)");
-        exit(-1);
-    }    
+  if (argc != 3) {
+    spdlog::error("Not enough arguments(should be 2)");
+    exit(-1);
+  }
 
-    libcompressor_CompressionAlgorithm algo;
-    libcompressor_Buffer buff;
-    buff.data = argv[2];
-    buff.size = strlen(argv[2]);
+  libcompressor_CompressionAlgorithm algo;
+  libcompressor_Buffer buff;
+  buff.data = strdup(argv[2]);
+  buff.size = strlen(argv[2]);
 
-    if (!strcmp(argv[1], "zlib")) {
-        algo = libcompressor_zlib;
-    } else if (!strcmp(argv[1], "bzip")) {
-        algo = libcompressor_bzip;
-    } else {
-        spdlog::error("User must use zlib or bzip only");
-        exit(-1);
-    }
+  if (!strcmp(argv[1], "zlib")) {
+    algo = libcompressor_zlib;
+  } else if (!strcmp(argv[1], "bzip")) {
+    algo = libcompressor_bzip;
+  } else {
+    spdlog::error("User must use zlib or bzip only");
+    return EXIT_FAILURE;
+  }
 
-    libcompressor_Buffer result = libcompressor_compress(algo, buff);
+  libcompressor_Buffer result = libcompressor_compress(algo, buff);
 
-    if (result.data == NULL) {
-        spdlog::error("Empty buffer returned");
-        return EXIT_FAILURE;
-    }
-
-    for (int i = 0; i < result.size; i++)
-    {
-        printf("%0.2hhx", result.data[i]);
-    }
-    printf("\n");
-    free(result.data);
-    return EXIT_SUCCESS;
+  if (result.data == NULL) {
+    spdlog::error("Empty buffer returned");
+    return EXIT_FAILURE;
+  }
+  for (int i = 0; i < result.size; i++) {
+    printf("%.2hhx", result.data[i]);
+  }
+  printf("\n");
+  free(result.data);
+  free(buff.data);
+  return EXIT_SUCCESS;
 }

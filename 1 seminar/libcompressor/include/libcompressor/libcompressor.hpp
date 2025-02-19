@@ -8,17 +8,14 @@
 /**
  * @brief Перечисление имеющихся алгоритмов сжатия.
  */
-enum libcompressor_CompressionAlgorithm {
-    libcompressor_zlib,
-    libcompressor_bzip
-} ;
+enum libcompressor_CompressionAlgorithm { libcompressor_zlib, libcompressor_bzip };
 
 /**
  * @brief Контейнер с данными.
  */
 typedef struct libcompressor_Buffer {
-    char* data;
-    int size;
+  char* data;
+  int size;
 } libcompressor_Buffer;
 
 /**
