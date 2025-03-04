@@ -46,9 +46,6 @@ doxygen_add_docs(docs
     DOXYFILE ${CMAKE_SOURCE_DIR}/Doxyfile
 )
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_BINARY_DIR}")
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}")
-
 include(GNUInstallDirs)
 
 enable_testing()

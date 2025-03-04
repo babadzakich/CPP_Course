@@ -7,9 +7,8 @@ target_include_directories(libcompressor PUBLIC
 
 find_package(BZip2 REQUIRED)
 find_package(ZLIB REQUIRED)
-find_package(GTest REQUIRED)
 
-target_link_libraries(libcompressor PUBLIC BZip2::BZip2 ZLIB::ZLIB GTest::GTest)
+target_link_libraries(libcompressor PUBLIC BZip2::BZip2 ZLIB::ZLIB)
 
 install(TARGETS libcompressor
     EXPORT libcompressorTargets
