@@ -1,0 +1,147 @@
+{
+	"inputs" : 
+	[
+		{
+			"path" : "CMakeLists.txt"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/CMakeFiles/3.30.5/CMakeSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeSystemSpecificInitialize.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/Platform/Linux-Initialize.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/CMakeFiles/3.30.5/CMakeCCompiler.cmake"
+		},
+		{
+			"isGenerated" : true,
+			"path" : "build/CMakeFiles/3.30.5/CMakeCXXCompiler.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeSystemSpecificInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeGenericSystem.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeInitializeConfigs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/Platform/Linux.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/Platform/UnixPaths.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/Compiler/GNU-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/Compiler/GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/Compiler/CMakeCommonCompilerMacros.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/Platform/Linux-GNU-C.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/Platform/Linux-GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCXXInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeLanguageInformation.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/Compiler/GNU-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/Compiler/GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/Platform/Linux-GNU-CXX.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/Platform/Linux-GNU.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/babadzakich/\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0438/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/share/cmake-3.30/Modules/CMakeCommonLanguageInclude.cmake"
+		},
+		{
+			"path" : "banklib/CMakeLists.txt"
+		},
+		{
+			"path" : "banklib/classes/CMakeLists.txt"
+		}
+	],
+	"kind" : "cmakeFiles",
+	"paths" : 
+	{
+		"build" : "/home/babadzakich/\u0420\u0430\u0431\u043e\u0447\u0438\u0439 \u0441\u0442\u043e\u043b/NSU/4Semester/CPP_Course/2Task/build",
+		"source" : "/home/babadzakich/\u0420\u0430\u0431\u043e\u0447\u0438\u0439 \u0441\u0442\u043e\u043b/NSU/4Semester/CPP_Course/2Task"
+	},
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 1
+	}
+}

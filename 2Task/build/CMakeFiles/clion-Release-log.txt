@@ -1,0 +1,4 @@
+/home/babadzakich/Загрузки/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Release -S "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task" -B "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build"
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build

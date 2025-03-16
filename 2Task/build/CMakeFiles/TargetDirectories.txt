@@ -1,0 +1,7 @@
+/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles/2Task.dir
+/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles/edit_cache.dir
+/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles/rebuild_cache.dir
+/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/banklib/CMakeFiles/edit_cache.dir
+/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/banklib/CMakeFiles/rebuild_cache.dir
+/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/banklib/classes/CMakeFiles/edit_cache.dir
+/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/banklib/classes/CMakeFiles/rebuild_cache.dir
