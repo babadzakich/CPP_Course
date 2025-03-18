@@ -1,2 +1,0 @@
-/usr/bin/ar qc lib2Task.a CMakeFiles/2Task.dir/library.cpp.o CMakeFiles/2Task.dir/banklib/classes/Deposit.cpp.o CMakeFiles/2Task.dir/banklib/classes/Credit.cpp.o CMakeFiles/2Task.dir/banklib/enums/Deposit_type.cpp.o CMakeFiles/2Task.dir/banklib/enums/Credit_Type.cpp.o
-/usr/bin/ranlib lib2Task.a

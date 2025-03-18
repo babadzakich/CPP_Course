@@ -1,3 +1,19 @@
-Start testing: Mar 15 19:45 +07
+Start testing: Mar 18 17:04 +07
 ----------------------------------------------------------
-End testing: Mar 15 19:45 +07
+Unable to find executable: /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/banklib/tests/banklibtest
+1/1 Testing: banklibtest
+1/1 Test: banklibtest
+Command: "" "--gtest_output=xml:/home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/test_result/test_results.xml"
+Directory: /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/banklib/tests
+"banklibtest" start time: 
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"banklibtest" end time: Mar 18 17:04 +07
+"banklibtest" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Mar 18 17:04 +07

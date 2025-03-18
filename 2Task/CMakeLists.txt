@@ -1,14 +1,43 @@
-cmake_minimum_required(VERSION 3.30)
-project(2Task)
+cmake_minimum_required(VERSION 3.5)
 
-set(CMAKE_CXX_STANDARD 23)
+project(task_1)
 
-add_library(2Task STATIC library.cpp
-        banklib/classes/Deposit.cpp
-        banklib/classes/Deposit.h
-        banklib/classes/Credit.cpp
-        banklib/classes/Credit.h
-        banklib/enums/Deposit_type.cpp
-        banklib/enums/Credit_Type.cpp)
+set(CMAKE_EXPORT_COMPILE_COMMANDS YES)
+
+find_program(CLANG_FORMAT "clang-format")
+
+if (CLANG_FORMAT)
+    file(GLOB_RECURSE ALL_SOURCE_FILES
+        "*.cpp" "*.hpp" "*.c" "*.h"
+    )
+
+    add_custom_target(
+        format
+        COMMAND ${CLANG_FORMAT}
+        -i
+        -style=file
+        ${ALL_SOURCE_FILES}
+        COMMENT "Formatting all source files with clang-format..."
+    )
+else()
+    message(WARNING "clang-format not found. The 'format' target will not be available.")
+endif()
+
+find_program(CLANG_TIDY "clang-tidy")
+
+if (CLANG_TIDY)
+    set(CMAKE_CXX_CLANG_TIDY
+        ${CLANG_TIDY}
+        -config-file=${CMAKE_SOURCE_DIR}/.clang-tidy
+        -extra-arg=-Wno-unknown-warning-option
+    )
+else()
+    message(WARNING "clang-tidy not found. Static analysis will not be performed.")
+endif()
+
+include(GNUInstallDirs)
+
+enable_testing()
 
 add_subdirectory(banklib)
+add_subdirectory(bank)

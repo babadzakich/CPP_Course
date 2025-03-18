@@ -48,27 +48,37 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/babadzakich/Загрузки/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/bin/cmake
+CMAKE_COMMAND = /usr/bin/cmake
 
 # The command to remove a file.
-RM = /home/babadzakich/Загрузки/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/bin/cmake -E rm -f
+RM = /usr/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task"
+CMAKE_SOURCE_DIR = /home/babadzakich/NSU/4Semester/CPP_Course/2Task
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build"
+CMAKE_BINARY_DIR = /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build
 
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
+
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "No interactive CMake dialog available..."
-	/home/babadzakich/Загрузки/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake cache editor..."
+	/usr/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -78,18 +88,63 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake to regenerate build system..."
-	/home/babadzakich/Загрузки/CLion-2024.3.4/clion-2024.3.4/bin/cmake/linux/x64/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/usr/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+.PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build//CMakeFiles/progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,137 +172,56 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named 2Task
+# Target rules for targets named format
 
 # Build rule for target.
-2Task: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 2Task
-.PHONY : 2Task
+format: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 format
+.PHONY : format
 
 # fast build rule for target.
-2Task/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/build
-.PHONY : 2Task/fast
+format/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/format.dir/build.make CMakeFiles/format.dir/build
+.PHONY : format/fast
 
-banklib/classes/Credit.o: banklib/classes/Credit.cpp.o
-.PHONY : banklib/classes/Credit.o
+#=============================================================================
+# Target rules for targets named banklib
 
-# target to build an object file
-banklib/classes/Credit.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/banklib/classes/Credit.cpp.o
-.PHONY : banklib/classes/Credit.cpp.o
+# Build rule for target.
+banklib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 banklib
+.PHONY : banklib
 
-banklib/classes/Credit.i: banklib/classes/Credit.cpp.i
-.PHONY : banklib/classes/Credit.i
+# fast build rule for target.
+banklib/fast:
+	$(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/build
+.PHONY : banklib/fast
 
-# target to preprocess a source file
-banklib/classes/Credit.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/banklib/classes/Credit.cpp.i
-.PHONY : banklib/classes/Credit.cpp.i
+#=============================================================================
+# Target rules for targets named banklibtest
 
-banklib/classes/Credit.s: banklib/classes/Credit.cpp.s
-.PHONY : banklib/classes/Credit.s
+# Build rule for target.
+banklibtest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 banklibtest
+.PHONY : banklibtest
 
-# target to generate assembly for a file
-banklib/classes/Credit.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/banklib/classes/Credit.cpp.s
-.PHONY : banklib/classes/Credit.cpp.s
+# fast build rule for target.
+banklibtest/fast:
+	$(MAKE) $(MAKESILENT) -f banklib/tests/CMakeFiles/banklibtest.dir/build.make banklib/tests/CMakeFiles/banklibtest.dir/build
+.PHONY : banklibtest/fast
 
-banklib/classes/Deposit.o: banklib/classes/Deposit.cpp.o
-.PHONY : banklib/classes/Deposit.o
+#=============================================================================
+# Target rules for targets named bank
 
-# target to build an object file
-banklib/classes/Deposit.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/banklib/classes/Deposit.cpp.o
-.PHONY : banklib/classes/Deposit.cpp.o
+# Build rule for target.
+bank: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bank
+.PHONY : bank
 
-banklib/classes/Deposit.i: banklib/classes/Deposit.cpp.i
-.PHONY : banklib/classes/Deposit.i
-
-# target to preprocess a source file
-banklib/classes/Deposit.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/banklib/classes/Deposit.cpp.i
-.PHONY : banklib/classes/Deposit.cpp.i
-
-banklib/classes/Deposit.s: banklib/classes/Deposit.cpp.s
-.PHONY : banklib/classes/Deposit.s
-
-# target to generate assembly for a file
-banklib/classes/Deposit.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/banklib/classes/Deposit.cpp.s
-.PHONY : banklib/classes/Deposit.cpp.s
-
-banklib/enums/Credit_Type.o: banklib/enums/Credit_Type.cpp.o
-.PHONY : banklib/enums/Credit_Type.o
-
-# target to build an object file
-banklib/enums/Credit_Type.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/banklib/enums/Credit_Type.cpp.o
-.PHONY : banklib/enums/Credit_Type.cpp.o
-
-banklib/enums/Credit_Type.i: banklib/enums/Credit_Type.cpp.i
-.PHONY : banklib/enums/Credit_Type.i
-
-# target to preprocess a source file
-banklib/enums/Credit_Type.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/banklib/enums/Credit_Type.cpp.i
-.PHONY : banklib/enums/Credit_Type.cpp.i
-
-banklib/enums/Credit_Type.s: banklib/enums/Credit_Type.cpp.s
-.PHONY : banklib/enums/Credit_Type.s
-
-# target to generate assembly for a file
-banklib/enums/Credit_Type.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/banklib/enums/Credit_Type.cpp.s
-.PHONY : banklib/enums/Credit_Type.cpp.s
-
-banklib/enums/Deposit_type.o: banklib/enums/Deposit_type.cpp.o
-.PHONY : banklib/enums/Deposit_type.o
-
-# target to build an object file
-banklib/enums/Deposit_type.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/banklib/enums/Deposit_type.cpp.o
-.PHONY : banklib/enums/Deposit_type.cpp.o
-
-banklib/enums/Deposit_type.i: banklib/enums/Deposit_type.cpp.i
-.PHONY : banklib/enums/Deposit_type.i
-
-# target to preprocess a source file
-banklib/enums/Deposit_type.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/banklib/enums/Deposit_type.cpp.i
-.PHONY : banklib/enums/Deposit_type.cpp.i
-
-banklib/enums/Deposit_type.s: banklib/enums/Deposit_type.cpp.s
-.PHONY : banklib/enums/Deposit_type.s
-
-# target to generate assembly for a file
-banklib/enums/Deposit_type.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/banklib/enums/Deposit_type.cpp.s
-.PHONY : banklib/enums/Deposit_type.cpp.s
-
-library.o: library.cpp.o
-.PHONY : library.o
-
-# target to build an object file
-library.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/library.cpp.o
-.PHONY : library.cpp.o
-
-library.i: library.cpp.i
-.PHONY : library.i
-
-# target to preprocess a source file
-library.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/library.cpp.i
-.PHONY : library.cpp.i
-
-library.s: library.cpp.s
-.PHONY : library.s
-
-# target to generate assembly for a file
-library.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/2Task.dir/build.make CMakeFiles/2Task.dir/library.cpp.s
-.PHONY : library.cpp.s
+# fast build rule for target.
+bank/fast:
+	$(MAKE) $(MAKESILENT) -f bank/CMakeFiles/bank.dir/build.make bank/CMakeFiles/bank.dir/build
+.PHONY : bank/fast
 
 # Help Target
 help:
@@ -256,23 +230,16 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... 2Task"
-	@echo "... banklib/classes/Credit.o"
-	@echo "... banklib/classes/Credit.i"
-	@echo "... banklib/classes/Credit.s"
-	@echo "... banklib/classes/Deposit.o"
-	@echo "... banklib/classes/Deposit.i"
-	@echo "... banklib/classes/Deposit.s"
-	@echo "... banklib/enums/Credit_Type.o"
-	@echo "... banklib/enums/Credit_Type.i"
-	@echo "... banklib/enums/Credit_Type.s"
-	@echo "... banklib/enums/Deposit_type.o"
-	@echo "... banklib/enums/Deposit_type.i"
-	@echo "... banklib/enums/Deposit_type.s"
-	@echo "... library.o"
-	@echo "... library.i"
-	@echo "... library.s"
+	@echo "... test"
+	@echo "... format"
+	@echo "... bank"
+	@echo "... banklib"
+	@echo "... banklibtest"
 .PHONY : help
 
 
