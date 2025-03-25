@@ -8,14 +8,14 @@
 class Workplace {
  private:
   Workspace_Type workplaceType;
-  Number branchSeats;
+  uint64_t branchSeats;
 
  public:
-  Workplace(const Workspace_Type& type, Number seats);
+  Workplace(const Workspace_Type& type, uint64_t seats);
   Workplace() : workplaceType(Workspace_Type::CASH_DESK), branchSeats(0) {};
 
   Workspace_Type getWorkplaceType() const;
-  Number getBranchSeats() const;
+  uint64_t getBranchSeats() const;
 };
 
 #endif  // WORKPLACE_H

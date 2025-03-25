@@ -1,0 +1,288 @@
+@startuml BankSystem
+
+' Enums
+enum Account_Type {
+    DEBIT
+    CREDIT
+    DEPOSIT
+}
+
+enum Client_Type {
+    INDIVIDUAL_CLIENT
+    VIP_INDIVIDUAL_CLIENT 
+    LEGAL_ENTITY
+    VIP_LEGAL_ENTITY
+    NOT_A_CLIENT
+}
+
+enum Credit_Type {
+    CHARGED_DAILY
+    CHARGED_MONTHLY 
+    CHARGED_QUARTERLY
+    CHARGED_SEMIANNUALLY
+    CHARGED_ANNUALLY
+}
+
+enum Currency_Type {
+    RUB
+    YUAN
+    USD
+    EUR
+}
+
+enum Deposit_Type {
+    COMPOUNDED_DAILY_REMAINING
+    COMPOUNDED_DAILY_MIN
+    COMPOUNDED_MONTHLY_REMAINING
+    COMPOUNDED_MONTHLY_MIN
+    COMPOUNDED_QUARTERLY_REMAINING
+    COMPOUNDED_QUARTERLY_MIN
+    COMPOUNDED_SEMIANUALLY_REMAINING
+    COMPOUNDED_SEMIANUALLY_MIN
+    COMPOUNDED_ANUALLY_REMAINING
+    COMPOUNDED_ANUALLY_MIN
+}
+
+enum Workspace_Type {
+    CLIENT_MANAGER
+    CASH_DESK
+    CURRENCY_EXCHANGE
+    VIP_CLIENT_MANAGER
+}
+
+' Classes
+class Money {
+    -value: double
+    +getValue(): double
+    +getVal1(): uint64_t
+    +getVal2(): uint64_t
+    +{static} round(value: double): double
+    +operator+(): Money
+    +operator-(): Money
+    +operator*(): Money
+    +operator/(): Money
+    +operator+=(): Money&
+    +operator-=(): Money&
+    +operator*=(): Money&
+    +operator/=(): Money&
+    +operator<(): bool
+    +operator>(): bool
+    +operator==(): bool
+    +operator!=(): bool
+    +operator<=(): bool
+    +operator>=(): bool
+}
+
+class Time {
+    -hours: int
+    -minutes: int
+    +Time(hours: int, minutes: int)
+    +getHours(): uint64_t
+    +getMinutes(): uint64_t
+    +operator++(): Time&
+    +operator++(int): Time
+    +operator+=(): Time&
+    +operator<(): bool
+    +operator>(): bool
+    +operator==(): bool
+    +operator>=(): bool
+    +operator<=(): bool
+    +operator!=(): bool
+}
+
+class Account {
+    -id: uint64_t
+    -type: Account_Type
+    -balance: Money
+    -currency: Currency_Type
+    -clientId: uint64_t
+    -associatedId: uint64_t
+    +getId(): uint64_t
+    +getType(): Account_Type
+    +getBalance(): Money
+    +getCurrency(): Currency_Type
+    +getClientId(): uint64_t
+    +getAssociatedId(): uint64_t
+    +takeMoney(amount: Money): void
+    +putMoney(amount: Money): void
+}
+
+class BankAccount {
+    -accountId: uint64_t
+    +getAccountId(): uint64_t
+}
+
+class Client {
+    -clientId: uint64_t
+    -name: string
+    -clientType: Client_Type
+    -deposits: set<accountID>
+    -credits: set<accountID>
+    +getClientId(): uint64_t
+    +getName(): string
+    +getClientType(): Client_Type
+    +getCredits(): set<accountID>
+    +getDeposits(): set<accountID>
+}
+
+class ClientCreditAccount {
+    -clientId: uint64_t
+    -accountId: uint64_t
+    -creditId: uint64_t
+    +getClientId(): uint64_t
+    +getAccountId(): uint64_t
+    +getCreditId(): uint64_t
+}
+
+class ClientDepositAccount {
+    -clientId: uint64_t
+    -accountId: uint64_t
+    -depositId: uint64_t
+    +getClientId(): uint64_t
+    +getAccountId(): uint64_t
+    +getDepositId(): uint64_t
+}
+
+class Credit {
+    -id: uint64_t
+    -procent: double
+    -type: Credit_Type
+    -received: Money
+    -accountId: uint64_t
+    +getId(): uint64_t
+    +getProcent(): double
+    +getType(): Credit_Type
+    +getReceived(): Money
+    +getAccountId(): uint64_t
+    +getDailyProcent(): double
+    +getMonthlyProcent(): double
+    +getQuarterlyProcent(): double
+    +getSemiannualProcent(): double
+    +getAnnualProcent(): double
+}
+
+class CreditCardApplication {
+    -clientId: uint64_t
+    -currency: Currency_Type
+    -creditType: Credit_Type
+    -amount: Money
+    -applicationDate: Date
+    +getClientId(): uint64_t
+    +getCurrency(): Currency_Type
+    +getCreditType(): Credit_Type
+    +getAmount(): Money
+    +getApplicationDate(): Date
+}
+
+class DebitCardApplication {
+    -clientId: uint64_t
+    -currency: Currency_Type
+    -depositType: Deposit_Type
+    -applicationDate: Date
+    +getClientId(): uint64_t
+    +getCurrency(): Currency_Type
+    +getDepositType(): Deposit_Type
+    +getApplicationDate(): Date
+}
+
+class Deposit {
+    -id: uint64_t
+    -procent: double
+    -type: Deposit_Type
+    -startDate: Date
+    -duration: uint64_t
+    -accountId: uint64_t
+    +getId(): uint64_t
+    +getDailyProcent(): double
+    +getMonthlyProcent(): double
+    +getQuarterlyProcent(): double
+    +getSemiannuallyProcent(): double
+    +getAnnuallyProcent(): double
+    +getType(): Deposit_Type
+    +getStartDate(): Date
+    +getDuration(): uint64_t
+    +getAccountId(): uint64_t
+}
+
+class ExchangeRate {
+    -sellingCurrency_Type: Currency_Type
+    -buyingCurrency_Type: Currency_Type
+    -exchangeRate: double
+    +getSellingCurrency(): Currency_Type
+    +getBuyingCurrency(): Currency_Type
+    +getExchangeRate(): double
+}
+
+class Workplace {
+    -workplaceType: Workspace_Type
+    -branchSeats: uint64_t
+    +getWorkplaceType(): Workspace_Type
+    +getBranchSeats(): uint64_t
+}
+
+class bankController {
+    -currentTime: Time
+    -date: Date
+    -clients: map<uint64_t, Client>
+    -accounts: map<uint64_t, Account>
+    -credits: map<uint64_t, Credit>
+    -deposits: map<uint64_t, Deposit>
+    -exchangeRates: vector<ExchangeRate>
+    -workplaces: vector<Workplace>
+    -pendingCreditCardApplications: map<uint64_t, CreditCardApplication>
+    -pendingDebitCardApplications: map<uint64_t, DebitCardApplication>
+    -workplaceStats: vector<WorkplaceStats>
+    +startBankDay(date: Date, time: Time): void
+    +endBankDay(date: Date, time: Time): void
+    +handleClientOperation(clientId: uint64_t, operation: Operation_Type): void
+    +handlePersonalAppeal(name: string, type: Client_Type, ops: vector<Operation_Type>): void
+    +handleTelephoneInquiry(name: string, accountId: uint64_t): void
+    +handleOnlineCreditCardPayment(accountId: uint64_t, currency: Currency_Type, amount: Money): void
+    +handleOnlineDebitCardPayment(accountId: uint64_t, currency: Currency_Type, amount: Money): void
+    +handleOnlineTransfer(fromId: uint64_t, toId: uint64_t, amount: Money): void
+    +handleOnlineInboundTransfer(accountId: uint64_t, amount: Money): void
+}
+
+' Relationships
+bankController --> "*" Client: manages
+bankController --> "*" Account: manages
+bankController --> "*" Credit: manages
+bankController --> "*" Deposit: manages
+bankController --> "*" ExchangeRate: uses
+bankController --> "*" Workplace: manages
+bankController --> Time: has
+bankController --> "*" CreditCardApplication: tracks
+bankController --> "*" DebitCardApplication: tracks
+
+Account --> Money: has
+Account --> Account_Type: has
+Account --> Currency_Type: has
+
+Client --> Client_Type: has
+Client "*" --> "*" Account: owns
+
+ClientCreditAccount --> Client: belongs to
+ClientCreditAccount --> Account: references
+ClientCreditAccount --> Credit: references
+
+ClientDepositAccount --> Client: belongs to
+ClientDepositAccount --> Account: references
+ClientDepositAccount --> Deposit: references
+
+Credit --> Credit_Type: has
+Credit --> Money: has
+
+CreditCardApplication --> Currency_Type: has
+CreditCardApplication --> Credit_Type: has
+CreditCardApplication --> Money: has
+
+DebitCardApplication --> Currency_Type: has
+DebitCardApplication --> Deposit_Type: has
+
+Deposit --> Deposit_Type: has
+
+ExchangeRate --> Currency_Type: converts between
+
+Workplace --> Workspace_Type: has
+
+@enduml

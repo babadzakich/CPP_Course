@@ -1,6 +1,4 @@
-//
-// Created by babadzakich on 15.03.2025.
-//
+
 
 #include "banklib/enums/Deposit_Type.h"
 

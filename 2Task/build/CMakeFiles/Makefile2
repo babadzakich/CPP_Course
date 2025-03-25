@@ -57,7 +57,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/babadzakich/NSU/4Semester/CPP_Course/2Task
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build
+CMAKE_BINARY_DIR = "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build"
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -132,14 +132,14 @@ banklib/tests/clean: banklib/tests/CMakeFiles/banklibtest.dir/clean
 CMakeFiles/format.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/format.dir/build.make CMakeFiles/format.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/format.dir/build.make CMakeFiles/format.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles --progress-num=22 "Built target format"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" --progress-num=22 "Built target format"
 .PHONY : CMakeFiles/format.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/format.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" 1
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/format.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" 0
 .PHONY : CMakeFiles/format.dir/rule
 
 # Convenience name for target.
@@ -158,14 +158,14 @@ CMakeFiles/format.dir/clean:
 banklib/CMakeFiles/banklib.dir/all:
 	$(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/depend
 	$(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles --progress-num=3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19 "Built target banklib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" --progress-num=3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19 "Built target banklib"
 .PHONY : banklib/CMakeFiles/banklib.dir/all
 
 # Build rule for subdir invocation for target.
 banklib/CMakeFiles/banklib.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles 17
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" 17
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 banklib/CMakeFiles/banklib.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" 0
 .PHONY : banklib/CMakeFiles/banklib.dir/rule
 
 # Convenience name for target.
@@ -184,14 +184,14 @@ banklib/CMakeFiles/banklib.dir/clean:
 banklib/tests/CMakeFiles/banklibtest.dir/all: banklib/CMakeFiles/banklib.dir/all
 	$(MAKE) $(MAKESILENT) -f banklib/tests/CMakeFiles/banklibtest.dir/build.make banklib/tests/CMakeFiles/banklibtest.dir/depend
 	$(MAKE) $(MAKESILENT) -f banklib/tests/CMakeFiles/banklibtest.dir/build.make banklib/tests/CMakeFiles/banklibtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles --progress-num=20,21 "Built target banklibtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" --progress-num=20,21 "Built target banklibtest"
 .PHONY : banklib/tests/CMakeFiles/banklibtest.dir/all
 
 # Build rule for subdir invocation for target.
 banklib/tests/CMakeFiles/banklibtest.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles 19
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" 19
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 banklib/tests/CMakeFiles/banklibtest.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" 0
 .PHONY : banklib/tests/CMakeFiles/banklibtest.dir/rule
 
 # Convenience name for target.
@@ -210,14 +210,14 @@ banklib/tests/CMakeFiles/banklibtest.dir/clean:
 bank/CMakeFiles/bank.dir/all: banklib/CMakeFiles/banklib.dir/all
 	$(MAKE) $(MAKESILENT) -f bank/CMakeFiles/bank.dir/build.make bank/CMakeFiles/bank.dir/depend
 	$(MAKE) $(MAKESILENT) -f bank/CMakeFiles/bank.dir/build.make bank/CMakeFiles/bank.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles --progress-num=1,2 "Built target bank"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" --progress-num=1,2 "Built target bank"
 .PHONY : bank/CMakeFiles/bank.dir/all
 
 # Build rule for subdir invocation for target.
 bank/CMakeFiles/bank.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles 19
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" 19
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bank/CMakeFiles/bank.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" 0
 .PHONY : bank/CMakeFiles/bank.dir/rule
 
 # Convenience name for target.

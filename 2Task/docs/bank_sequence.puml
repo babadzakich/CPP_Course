@@ -1,0 +1,77 @@
+@startuml BankSequences
+
+' Client Operation Sequence
+actor Client
+participant "Bank Controller" as BC
+participant "Account" as Acc
+participant "Client" as Cl
+participant "Credit" as Cr
+participant "Deposit" as Dep
+
+' Open Account Sequence
+group Open Account
+    Client -> BC: handleClientOperation(clientId, OPEN_ACCOUNT)
+    activate BC
+    BC -> BC: checkClientAccountCount()
+    BC -> Acc: create new Account
+    BC -> Dep: create new Deposit
+    BC -> Cl: add to deposits
+    BC --> Client: account created
+    deactivate BC
+end
+
+' Check Balance Sequence
+group Check Balance
+    Client -> BC: handleClientOperation(clientId, CHECK_BALANCE)
+    activate BC
+    BC -> Cl: validate client
+    BC -> Acc: getBalance()
+    BC --> Client: balance info
+    deactivate BC
+end
+
+' Get Loan Sequence
+group Get Loan
+    Client -> BC: handleClientOperation(clientId, GET_LOAN)
+    activate BC
+    BC -> BC: validateLoanAmount()
+    BC -> Acc: create credit account
+    BC -> Cr: create credit
+    BC -> Cl: add to credits
+    BC --> Client: loan approved
+    deactivate BC
+end
+
+' Exchange Currency Sequence
+group Exchange Currency
+    Client -> BC: handleClientOperation(clientId, EXCHANGE_CURRENCY)
+    activate BC
+    BC -> BC: findExchangeRate()
+    BC -> Acc: takeMoney()
+    BC -> Acc: putMoney()
+    BC --> Client: exchange complete
+    deactivate BC
+end
+
+' Online Operations Sequence
+group Online Operations
+    Client -> BC: handleOnlineTransfer()
+    activate BC
+    BC -> BC: validateAccounts()
+    BC -> Acc: takeMoney()
+    BC -> Acc: putMoney()
+    BC --> Client: transfer complete
+    deactivate BC
+end
+
+' Day End Sequence
+group End Bank Day
+    BC -> BC: endBankDay()
+    activate BC
+    BC -> Cr: process daily credits
+    BC -> Dep: process daily deposits
+    BC -> BC: update statistics
+    deactivate BC
+end
+
+@enduml

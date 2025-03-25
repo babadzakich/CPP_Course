@@ -4,10 +4,10 @@
 
 #include "banklib/classes/Credit.h"
 
-Credit::Credit(Number id, double procent, Credit_Type type, Money received)
-    : id(id), procent(procent), type(type), received(received) {}
+Credit::Credit(uint64_t id, double procent, Credit_Type type, Money received, uint64_t accountId)
+    : id(id), procent(procent), type(type), received(received), accountId(accountId) {}
 
-Number Credit::getId() const {
+uint64_t Credit::getId() const {
   return id;
 }
 
@@ -17,6 +17,10 @@ double Credit::getProcent() const {
 
 Credit_Type Credit::getType() const {
   return type;
+}
+
+uint64_t Credit::getAccountId() const {
+  return accountId;
 }
 
 double Credit::getDailyProcent() const {

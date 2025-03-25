@@ -6,16 +6,12 @@
 class Money {
  private:
   double value;
-  int val1;
-  int val2;
 
   double round(double value) { return (((long long int)(value * 10000) + 5 * (value < 0.0 ? -1 : 1)) / 10) / 1000.0; }
 
  public:
-  Money(Number value1, Number value2) {
+  Money(uint64_t value1, uint64_t value2) {
     value = round(value1 + value2 / 100.0);
-    val1 = value1;
-    val2 = value2;
   }
 
   Money& operator+=(const Money& other) {
@@ -112,9 +108,13 @@ class Money {
 
   double getValue() const { return value; }
 
-  Number getVal1() const { return val1; }
+  uint64_t getVal1() const {
+    return (uint64_t)value; 
+  }
 
-  Number getVal2() const { return val2; }
+  uint64_t getVal2() const {
+    return (uint64_t)(value * 1000) % 1000; 
+  }
 };
 
 #endif  // MONEY_H

@@ -6,14 +6,14 @@
 
 class BankAccount {
  private:
-  Number accountId;
+  uint64_t accountId;
 
  public:
   BankAccount() : accountId(0) {};
-  BankAccount(Number aId) : accountId(aId) {};
+  BankAccount(uint64_t aId) : accountId(aId) {};
 
-  Number getAccountId() const;
+  uint64_t getAccountId() const;
 };
-;
+
 
 #endif  // BANK_ACCOUNT_H

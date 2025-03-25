@@ -1,7 +1,10 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-using Number = unsigned long long;
-using Date = Number;
+#include <bits/stdint-uintn.h>
+#include <vector>
+#include <set>
+
+using Date = uint64_t;
 
 #endif  // TYPES_H

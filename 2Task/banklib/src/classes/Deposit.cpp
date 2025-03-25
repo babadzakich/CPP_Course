@@ -4,7 +4,7 @@
 
 #include "banklib/classes/Deposit.h"
 
-Number Deposit::getId() const {
+uint64_t Deposit::getId() const {
   return id;
 }
 
@@ -36,9 +36,13 @@ Date Deposit::getStartDate() const {
   return startDate;
 }
 
-Number Deposit::getDuration() const {
+uint64_t Deposit::getDuration() const {
   return duration;
 }
 
-Deposit::Deposit(Number id, double procent, Deposit_Type type, Date startDate, Number duration)
-    : id(id), procent(procent), type(type), startDate(startDate), duration(duration) {}
+uint64_t Deposit::getAccountId() const {
+  return accountId;
+}
+
+Deposit::Deposit(uint64_t id, double procent, Deposit_Type type, Date startDate, uint64_t duration, uint64_t accountId)
+    : id(id), procent(procent), type(type), startDate(startDate), duration(duration), accountId(accountId) {}

@@ -7,19 +7,21 @@
 
 class Credit {
  private:
-  Number id;
+  uint64_t id;
   double procent;
   Credit_Type type;
   Money received;
+  uint64_t accountId;
 
  public:
-  Credit() : id(0), procent(0.0), type(Credit_Type::CHARGED_DAILY), received(Money(0, 0)) {}
-  Credit(Number id, double procent, Credit_Type type, Money received);
+  Credit() : id(0), procent(0.0), type(Credit_Type::CHARGED_DAILY), received(Money(0, 0)), accountId(0) {}
+  Credit(uint64_t id, double procent, Credit_Type type, Money received, uint64_t accountId);
 
-  Number getId() const;
+  uint64_t getId() const;
   double getProcent() const;
   Credit_Type getType() const;
-  Money getReceived() const { return received; }
+  Money getReceived() const;
+  uint64_t getAccountId() const;
 
   double getDailyProcent() const;
   double getMonthlyProcent() const;

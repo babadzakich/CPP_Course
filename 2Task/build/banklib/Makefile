@@ -60,7 +60,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/babadzakich/NSU/4Semester/CPP_Course/2Task
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build
+CMAKE_BINARY_DIR = "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -142,14 +142,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/banklib//CMakeFiles/progress.marks
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 banklib/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles 0
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(CMAKE_COMMAND) -E cmake_progress_start "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/banklib//CMakeFiles/progress.marks"
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 banklib/all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build/CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 banklib/clean
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 banklib/clean
 .PHONY : clean
 
 # The main clean target
@@ -158,22 +158,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 banklib/preinstall
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 banklib/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 banklib/preinstall
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 banklib/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 banklib/CMakeFiles/banklib.dir/rule:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 banklib/CMakeFiles/banklib.dir/rule
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 banklib/CMakeFiles/banklib.dir/rule
 .PHONY : banklib/CMakeFiles/banklib.dir/rule
 
 # Convenience name for target.
@@ -182,7 +182,7 @@ banklib: banklib/CMakeFiles/banklib.dir/rule
 
 # fast build rule for target.
 banklib/fast:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/build
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/build
 .PHONY : banklib/fast
 
 src/bankController.o: src/bankController.cpp.o
@@ -190,7 +190,7 @@ src/bankController.o: src/bankController.cpp.o
 
 # target to build an object file
 src/bankController.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/bankController.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/bankController.cpp.o
 .PHONY : src/bankController.cpp.o
 
 src/bankController.i: src/bankController.cpp.i
@@ -198,7 +198,7 @@ src/bankController.i: src/bankController.cpp.i
 
 # target to preprocess a source file
 src/bankController.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/bankController.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/bankController.cpp.i
 .PHONY : src/bankController.cpp.i
 
 src/bankController.s: src/bankController.cpp.s
@@ -206,7 +206,7 @@ src/bankController.s: src/bankController.cpp.s
 
 # target to generate assembly for a file
 src/bankController.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/bankController.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/bankController.cpp.s
 .PHONY : src/bankController.cpp.s
 
 src/classes/Account.o: src/classes/Account.cpp.o
@@ -214,7 +214,7 @@ src/classes/Account.o: src/classes/Account.cpp.o
 
 # target to build an object file
 src/classes/Account.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Account.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Account.cpp.o
 .PHONY : src/classes/Account.cpp.o
 
 src/classes/Account.i: src/classes/Account.cpp.i
@@ -222,7 +222,7 @@ src/classes/Account.i: src/classes/Account.cpp.i
 
 # target to preprocess a source file
 src/classes/Account.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Account.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Account.cpp.i
 .PHONY : src/classes/Account.cpp.i
 
 src/classes/Account.s: src/classes/Account.cpp.s
@@ -230,7 +230,7 @@ src/classes/Account.s: src/classes/Account.cpp.s
 
 # target to generate assembly for a file
 src/classes/Account.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Account.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Account.cpp.s
 .PHONY : src/classes/Account.cpp.s
 
 src/classes/Bank_Account.o: src/classes/Bank_Account.cpp.o
@@ -238,7 +238,7 @@ src/classes/Bank_Account.o: src/classes/Bank_Account.cpp.o
 
 # target to build an object file
 src/classes/Bank_Account.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Bank_Account.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Bank_Account.cpp.o
 .PHONY : src/classes/Bank_Account.cpp.o
 
 src/classes/Bank_Account.i: src/classes/Bank_Account.cpp.i
@@ -246,7 +246,7 @@ src/classes/Bank_Account.i: src/classes/Bank_Account.cpp.i
 
 # target to preprocess a source file
 src/classes/Bank_Account.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Bank_Account.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Bank_Account.cpp.i
 .PHONY : src/classes/Bank_Account.cpp.i
 
 src/classes/Bank_Account.s: src/classes/Bank_Account.cpp.s
@@ -254,7 +254,7 @@ src/classes/Bank_Account.s: src/classes/Bank_Account.cpp.s
 
 # target to generate assembly for a file
 src/classes/Bank_Account.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Bank_Account.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Bank_Account.cpp.s
 .PHONY : src/classes/Bank_Account.cpp.s
 
 src/classes/Bank_Client.o: src/classes/Bank_Client.cpp.o
@@ -262,7 +262,7 @@ src/classes/Bank_Client.o: src/classes/Bank_Client.cpp.o
 
 # target to build an object file
 src/classes/Bank_Client.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Bank_Client.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Bank_Client.cpp.o
 .PHONY : src/classes/Bank_Client.cpp.o
 
 src/classes/Bank_Client.i: src/classes/Bank_Client.cpp.i
@@ -270,7 +270,7 @@ src/classes/Bank_Client.i: src/classes/Bank_Client.cpp.i
 
 # target to preprocess a source file
 src/classes/Bank_Client.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Bank_Client.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Bank_Client.cpp.i
 .PHONY : src/classes/Bank_Client.cpp.i
 
 src/classes/Bank_Client.s: src/classes/Bank_Client.cpp.s
@@ -278,7 +278,7 @@ src/classes/Bank_Client.s: src/classes/Bank_Client.cpp.s
 
 # target to generate assembly for a file
 src/classes/Bank_Client.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Bank_Client.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Bank_Client.cpp.s
 .PHONY : src/classes/Bank_Client.cpp.s
 
 src/classes/Client_Credit_Account.o: src/classes/Client_Credit_Account.cpp.o
@@ -286,7 +286,7 @@ src/classes/Client_Credit_Account.o: src/classes/Client_Credit_Account.cpp.o
 
 # target to build an object file
 src/classes/Client_Credit_Account.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Client_Credit_Account.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Client_Credit_Account.cpp.o
 .PHONY : src/classes/Client_Credit_Account.cpp.o
 
 src/classes/Client_Credit_Account.i: src/classes/Client_Credit_Account.cpp.i
@@ -294,7 +294,7 @@ src/classes/Client_Credit_Account.i: src/classes/Client_Credit_Account.cpp.i
 
 # target to preprocess a source file
 src/classes/Client_Credit_Account.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Client_Credit_Account.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Client_Credit_Account.cpp.i
 .PHONY : src/classes/Client_Credit_Account.cpp.i
 
 src/classes/Client_Credit_Account.s: src/classes/Client_Credit_Account.cpp.s
@@ -302,7 +302,7 @@ src/classes/Client_Credit_Account.s: src/classes/Client_Credit_Account.cpp.s
 
 # target to generate assembly for a file
 src/classes/Client_Credit_Account.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Client_Credit_Account.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Client_Credit_Account.cpp.s
 .PHONY : src/classes/Client_Credit_Account.cpp.s
 
 src/classes/Client_Deposit_Account.o: src/classes/Client_Deposit_Account.cpp.o
@@ -310,7 +310,7 @@ src/classes/Client_Deposit_Account.o: src/classes/Client_Deposit_Account.cpp.o
 
 # target to build an object file
 src/classes/Client_Deposit_Account.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Client_Deposit_Account.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Client_Deposit_Account.cpp.o
 .PHONY : src/classes/Client_Deposit_Account.cpp.o
 
 src/classes/Client_Deposit_Account.i: src/classes/Client_Deposit_Account.cpp.i
@@ -318,7 +318,7 @@ src/classes/Client_Deposit_Account.i: src/classes/Client_Deposit_Account.cpp.i
 
 # target to preprocess a source file
 src/classes/Client_Deposit_Account.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Client_Deposit_Account.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Client_Deposit_Account.cpp.i
 .PHONY : src/classes/Client_Deposit_Account.cpp.i
 
 src/classes/Client_Deposit_Account.s: src/classes/Client_Deposit_Account.cpp.s
@@ -326,7 +326,7 @@ src/classes/Client_Deposit_Account.s: src/classes/Client_Deposit_Account.cpp.s
 
 # target to generate assembly for a file
 src/classes/Client_Deposit_Account.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Client_Deposit_Account.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Client_Deposit_Account.cpp.s
 .PHONY : src/classes/Client_Deposit_Account.cpp.s
 
 src/classes/Credit.o: src/classes/Credit.cpp.o
@@ -334,7 +334,7 @@ src/classes/Credit.o: src/classes/Credit.cpp.o
 
 # target to build an object file
 src/classes/Credit.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Credit.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Credit.cpp.o
 .PHONY : src/classes/Credit.cpp.o
 
 src/classes/Credit.i: src/classes/Credit.cpp.i
@@ -342,7 +342,7 @@ src/classes/Credit.i: src/classes/Credit.cpp.i
 
 # target to preprocess a source file
 src/classes/Credit.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Credit.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Credit.cpp.i
 .PHONY : src/classes/Credit.cpp.i
 
 src/classes/Credit.s: src/classes/Credit.cpp.s
@@ -350,7 +350,7 @@ src/classes/Credit.s: src/classes/Credit.cpp.s
 
 # target to generate assembly for a file
 src/classes/Credit.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Credit.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Credit.cpp.s
 .PHONY : src/classes/Credit.cpp.s
 
 src/classes/Deposit.o: src/classes/Deposit.cpp.o
@@ -358,7 +358,7 @@ src/classes/Deposit.o: src/classes/Deposit.cpp.o
 
 # target to build an object file
 src/classes/Deposit.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Deposit.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Deposit.cpp.o
 .PHONY : src/classes/Deposit.cpp.o
 
 src/classes/Deposit.i: src/classes/Deposit.cpp.i
@@ -366,7 +366,7 @@ src/classes/Deposit.i: src/classes/Deposit.cpp.i
 
 # target to preprocess a source file
 src/classes/Deposit.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Deposit.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Deposit.cpp.i
 .PHONY : src/classes/Deposit.cpp.i
 
 src/classes/Deposit.s: src/classes/Deposit.cpp.s
@@ -374,7 +374,7 @@ src/classes/Deposit.s: src/classes/Deposit.cpp.s
 
 # target to generate assembly for a file
 src/classes/Deposit.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Deposit.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Deposit.cpp.s
 .PHONY : src/classes/Deposit.cpp.s
 
 src/classes/Exchange_Rate.o: src/classes/Exchange_Rate.cpp.o
@@ -382,7 +382,7 @@ src/classes/Exchange_Rate.o: src/classes/Exchange_Rate.cpp.o
 
 # target to build an object file
 src/classes/Exchange_Rate.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Exchange_Rate.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Exchange_Rate.cpp.o
 .PHONY : src/classes/Exchange_Rate.cpp.o
 
 src/classes/Exchange_Rate.i: src/classes/Exchange_Rate.cpp.i
@@ -390,7 +390,7 @@ src/classes/Exchange_Rate.i: src/classes/Exchange_Rate.cpp.i
 
 # target to preprocess a source file
 src/classes/Exchange_Rate.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Exchange_Rate.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Exchange_Rate.cpp.i
 .PHONY : src/classes/Exchange_Rate.cpp.i
 
 src/classes/Exchange_Rate.s: src/classes/Exchange_Rate.cpp.s
@@ -398,7 +398,7 @@ src/classes/Exchange_Rate.s: src/classes/Exchange_Rate.cpp.s
 
 # target to generate assembly for a file
 src/classes/Exchange_Rate.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Exchange_Rate.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Exchange_Rate.cpp.s
 .PHONY : src/classes/Exchange_Rate.cpp.s
 
 src/classes/Workplace.o: src/classes/Workplace.cpp.o
@@ -406,7 +406,7 @@ src/classes/Workplace.o: src/classes/Workplace.cpp.o
 
 # target to build an object file
 src/classes/Workplace.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Workplace.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Workplace.cpp.o
 .PHONY : src/classes/Workplace.cpp.o
 
 src/classes/Workplace.i: src/classes/Workplace.cpp.i
@@ -414,7 +414,7 @@ src/classes/Workplace.i: src/classes/Workplace.cpp.i
 
 # target to preprocess a source file
 src/classes/Workplace.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Workplace.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Workplace.cpp.i
 .PHONY : src/classes/Workplace.cpp.i
 
 src/classes/Workplace.s: src/classes/Workplace.cpp.s
@@ -422,7 +422,7 @@ src/classes/Workplace.s: src/classes/Workplace.cpp.s
 
 # target to generate assembly for a file
 src/classes/Workplace.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Workplace.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/classes/Workplace.cpp.s
 .PHONY : src/classes/Workplace.cpp.s
 
 src/enums/Account_Type.o: src/enums/Account_Type.cpp.o
@@ -430,7 +430,7 @@ src/enums/Account_Type.o: src/enums/Account_Type.cpp.o
 
 # target to build an object file
 src/enums/Account_Type.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Account_Type.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Account_Type.cpp.o
 .PHONY : src/enums/Account_Type.cpp.o
 
 src/enums/Account_Type.i: src/enums/Account_Type.cpp.i
@@ -438,7 +438,7 @@ src/enums/Account_Type.i: src/enums/Account_Type.cpp.i
 
 # target to preprocess a source file
 src/enums/Account_Type.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Account_Type.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Account_Type.cpp.i
 .PHONY : src/enums/Account_Type.cpp.i
 
 src/enums/Account_Type.s: src/enums/Account_Type.cpp.s
@@ -446,7 +446,7 @@ src/enums/Account_Type.s: src/enums/Account_Type.cpp.s
 
 # target to generate assembly for a file
 src/enums/Account_Type.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Account_Type.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Account_Type.cpp.s
 .PHONY : src/enums/Account_Type.cpp.s
 
 src/enums/Client_Type.o: src/enums/Client_Type.cpp.o
@@ -454,7 +454,7 @@ src/enums/Client_Type.o: src/enums/Client_Type.cpp.o
 
 # target to build an object file
 src/enums/Client_Type.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Client_Type.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Client_Type.cpp.o
 .PHONY : src/enums/Client_Type.cpp.o
 
 src/enums/Client_Type.i: src/enums/Client_Type.cpp.i
@@ -462,7 +462,7 @@ src/enums/Client_Type.i: src/enums/Client_Type.cpp.i
 
 # target to preprocess a source file
 src/enums/Client_Type.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Client_Type.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Client_Type.cpp.i
 .PHONY : src/enums/Client_Type.cpp.i
 
 src/enums/Client_Type.s: src/enums/Client_Type.cpp.s
@@ -470,7 +470,7 @@ src/enums/Client_Type.s: src/enums/Client_Type.cpp.s
 
 # target to generate assembly for a file
 src/enums/Client_Type.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Client_Type.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Client_Type.cpp.s
 .PHONY : src/enums/Client_Type.cpp.s
 
 src/enums/Credit_Type.o: src/enums/Credit_Type.cpp.o
@@ -478,7 +478,7 @@ src/enums/Credit_Type.o: src/enums/Credit_Type.cpp.o
 
 # target to build an object file
 src/enums/Credit_Type.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Credit_Type.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Credit_Type.cpp.o
 .PHONY : src/enums/Credit_Type.cpp.o
 
 src/enums/Credit_Type.i: src/enums/Credit_Type.cpp.i
@@ -486,7 +486,7 @@ src/enums/Credit_Type.i: src/enums/Credit_Type.cpp.i
 
 # target to preprocess a source file
 src/enums/Credit_Type.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Credit_Type.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Credit_Type.cpp.i
 .PHONY : src/enums/Credit_Type.cpp.i
 
 src/enums/Credit_Type.s: src/enums/Credit_Type.cpp.s
@@ -494,7 +494,7 @@ src/enums/Credit_Type.s: src/enums/Credit_Type.cpp.s
 
 # target to generate assembly for a file
 src/enums/Credit_Type.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Credit_Type.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Credit_Type.cpp.s
 .PHONY : src/enums/Credit_Type.cpp.s
 
 src/enums/Currency_Type.o: src/enums/Currency_Type.cpp.o
@@ -502,7 +502,7 @@ src/enums/Currency_Type.o: src/enums/Currency_Type.cpp.o
 
 # target to build an object file
 src/enums/Currency_Type.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Currency_Type.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Currency_Type.cpp.o
 .PHONY : src/enums/Currency_Type.cpp.o
 
 src/enums/Currency_Type.i: src/enums/Currency_Type.cpp.i
@@ -510,7 +510,7 @@ src/enums/Currency_Type.i: src/enums/Currency_Type.cpp.i
 
 # target to preprocess a source file
 src/enums/Currency_Type.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Currency_Type.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Currency_Type.cpp.i
 .PHONY : src/enums/Currency_Type.cpp.i
 
 src/enums/Currency_Type.s: src/enums/Currency_Type.cpp.s
@@ -518,7 +518,7 @@ src/enums/Currency_Type.s: src/enums/Currency_Type.cpp.s
 
 # target to generate assembly for a file
 src/enums/Currency_Type.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Currency_Type.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Currency_Type.cpp.s
 .PHONY : src/enums/Currency_Type.cpp.s
 
 src/enums/Deposit_Type.o: src/enums/Deposit_Type.cpp.o
@@ -526,7 +526,7 @@ src/enums/Deposit_Type.o: src/enums/Deposit_Type.cpp.o
 
 # target to build an object file
 src/enums/Deposit_Type.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Deposit_Type.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Deposit_Type.cpp.o
 .PHONY : src/enums/Deposit_Type.cpp.o
 
 src/enums/Deposit_Type.i: src/enums/Deposit_Type.cpp.i
@@ -534,7 +534,7 @@ src/enums/Deposit_Type.i: src/enums/Deposit_Type.cpp.i
 
 # target to preprocess a source file
 src/enums/Deposit_Type.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Deposit_Type.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Deposit_Type.cpp.i
 .PHONY : src/enums/Deposit_Type.cpp.i
 
 src/enums/Deposit_Type.s: src/enums/Deposit_Type.cpp.s
@@ -542,7 +542,7 @@ src/enums/Deposit_Type.s: src/enums/Deposit_Type.cpp.s
 
 # target to generate assembly for a file
 src/enums/Deposit_Type.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Deposit_Type.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Deposit_Type.cpp.s
 .PHONY : src/enums/Deposit_Type.cpp.s
 
 src/enums/Workspace_Type.o: src/enums/Workspace_Type.cpp.o
@@ -550,7 +550,7 @@ src/enums/Workspace_Type.o: src/enums/Workspace_Type.cpp.o
 
 # target to build an object file
 src/enums/Workspace_Type.cpp.o:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Workspace_Type.cpp.o
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Workspace_Type.cpp.o
 .PHONY : src/enums/Workspace_Type.cpp.o
 
 src/enums/Workspace_Type.i: src/enums/Workspace_Type.cpp.i
@@ -558,7 +558,7 @@ src/enums/Workspace_Type.i: src/enums/Workspace_Type.cpp.i
 
 # target to preprocess a source file
 src/enums/Workspace_Type.cpp.i:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Workspace_Type.cpp.i
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Workspace_Type.cpp.i
 .PHONY : src/enums/Workspace_Type.cpp.i
 
 src/enums/Workspace_Type.s: src/enums/Workspace_Type.cpp.s
@@ -566,7 +566,7 @@ src/enums/Workspace_Type.s: src/enums/Workspace_Type.cpp.s
 
 # target to generate assembly for a file
 src/enums/Workspace_Type.cpp.s:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Workspace_Type.cpp.s
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(MAKE) $(MAKESILENT) -f banklib/CMakeFiles/banklib.dir/build.make banklib/CMakeFiles/banklib.dir/src/enums/Workspace_Type.cpp.s
 .PHONY : src/enums/Workspace_Type.cpp.s
 
 # Help Target
@@ -642,6 +642,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/babadzakich/NSU/4Semester/CPP_Course/2Task/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd "/home/babadzakich/Рабочий стол/NSU/4Semester/CPP_Course/2Task/build" && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

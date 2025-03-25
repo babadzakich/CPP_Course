@@ -1,14 +1,14 @@
 #include "banklib/classes/Client_Deposit_Account.h"
 
-ClientDepositAccount::ClientDepositAccount(Number cId, Number aId, Number dId)
+ClientDepositAccount::ClientDepositAccount(uint64_t cId, uint64_t aId, uint64_t dId)
     : clientId(cId), accountId(aId), depositId(dId) {}
 
-Number ClientDepositAccount::getClientId() const {
+uint64_t ClientDepositAccount::getClientId() const {
   return clientId;
 }
-Number ClientDepositAccount::getAccountId() const {
+uint64_t ClientDepositAccount::getAccountId() const {
   return accountId;
 }
-Number ClientDepositAccount::getDepositId() const {
+uint64_t ClientDepositAccount::getDepositId() const {
   return depositId;
 }

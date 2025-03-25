@@ -1,16 +1,16 @@
 #include "banklib/classes/Client_Credit_Account.h"
 
-ClientCreditAccount::ClientCreditAccount(Number cId, Number aId, Number crId)
+ClientCreditAccount::ClientCreditAccount(uint64_t cId, uint64_t aId, uint64_t crId)
     : clientId(cId), accountId(aId), creditId(crId) {}
 
-Number ClientCreditAccount::getClientId() const {
+uint64_t ClientCreditAccount::getClientId() const {
   return clientId;
 }
 
-Number ClientCreditAccount::getAccountId() const {
+uint64_t ClientCreditAccount::getAccountId() const {
   return accountId;
 }
 
-Number ClientCreditAccount::getCreditId() const {
+uint64_t ClientCreditAccount::getCreditId() const {
   return creditId;
 }

@@ -5,17 +5,17 @@
 
 class ClientCreditAccount {
  private:
-  Number clientId;
-  Number accountId;
-  Number creditId;
+  uint64_t clientId;
+  uint64_t accountId;
+  uint64_t creditId;
 
  public:
-  ClientCreditAccount(Number cId, Number aId, Number crId);
+  ClientCreditAccount(uint64_t cId, uint64_t aId, uint64_t crId);
   ClientCreditAccount() : clientId(0), accountId(0), creditId(0) {};
 
-  Number getClientId() const;
-  Number getAccountId() const;
-  Number getCreditId() const;
+  uint64_t getClientId() const;
+  uint64_t getAccountId() const;
+  uint64_t getCreditId() const;
 };
 
 #endif  // CLIENT_DEBT_H
