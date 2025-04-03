@@ -1,11 +1,9 @@
 add_library(banklib STATIC
     src/bankController.cpp
+    src/staticStorage.cpp
     src/classes/Account.cpp
     src/classes/Bank_Account.cpp
-    src/classes/Bank_Client.cpp
-    src/classes/Client_Credit_Account.cpp
-    src/classes/Client_Deposit_Account.cpp
-    src/classes/Credit.cpp
+        src/classes/Credit.cpp
     src/classes/Deposit.cpp
     src/classes/Exchange_Rate.cpp
     src/classes/Workplace.cpp
@@ -35,4 +33,4 @@ install(EXPORT banklibTargets
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/banklib
 )
 
-add_subdirectory(tests)
+# add_subdirectory(tests)

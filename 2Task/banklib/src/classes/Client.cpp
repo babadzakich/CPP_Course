@@ -15,7 +15,6 @@ Client_Type Client::getClientType() const {
   return clientType;
 }
 
-
 std::set<accountID> Client::getCredits() const {
   return credits;
 }

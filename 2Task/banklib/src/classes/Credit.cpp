@@ -42,3 +42,7 @@ double Credit::getSemiannualProcent() const {
 double Credit::getAnnualProcent() const {
   return procent;
 }
+
+Money Credit::getReceived() const {
+  return received;
+}

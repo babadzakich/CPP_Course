@@ -1,104 +1,95 @@
-#include <banklib/bankController.h>
+#include "banklib/bankController.h"
 
 int main() {
-  uint64_t accountCount;
+  Amount accountCount;
   scanf("Accounts %llu\n", &accountCount);
-  Account accounts[accountCount];
+  std::vector<Account> accounts;
+  accounts.reserve(accountCount);  // Добавить остальным
   for (int i = 0; i < accountCount; i++) {
-    uint64_t id;
-    std::string type;
-    uint64_t val1, val2;
-    std::string currency;
-    scanf("%llu # %99[a-zA-Z0-9/_ ] # %llu.%llu # %99[a-zA-Z0-9/_ ]\n", &id, &type, &val1, &val2, &currency);
-    accounts[i] = Account(id, stringToAccountType(type), Money(val1, val2), stringToCurrency(currency));
+    Id id;
+    char type[100];  // string на char, и сделать string = char
+    unsigned long long val1, val2;
+    char currency[100];
+    Id clientId, associatedId;
+    scanf("%llu # %99[a-zA-Z0-9/_ ] # %llu.%llu # %99[a-zA-Z0-9/_ ] # %llu # %llu\n", &id, &type, &val1, &val2, &currency, &clientId, &associatedId);
+    accounts.push_back(Account(id, stringToAccountType(type), Money(val1, val2), stringToCurrency(currency), clientId, associatedId));
   }
 
-  uint64_t debitsCount;
+  Amount debitsCount;
   scanf("Debits %llu\n", &debitsCount);
-  Deposit debits[debitsCount];
+  std::vector<Deposit> debits;
+  debits.reserve(debitsCount);
   for (int i = 0; i < debitsCount; i++) {
-    uint64_t id;
+    Id id;
     double procent;
-    std::string type;
+    char type[100];
     Date startDate;
-    uint64_t duration;
-    scanf("%llu # %le # %99[a-zA-Z0-9/_ ] # %llu # %llu\n", &id, &procent, &type, &startDate, &duration);
-    debits[i] = Deposit(id, procent, stringToDepositType(type), startDate, duration);
+    Amount duration;
+    Id accountId;
+    scanf("%llu # %le # %99[a-zA-Z0-9/_ ] # %llu # %llu # %llu\n", &id, &procent, &type, &startDate, &duration, &accountId);
+    debits.push_back(Deposit(id, procent, stringToDepositType(type), startDate, duration, accountId));
   }
 
-  uint64_t creditsCount;
+  Amount creditsCount;
   scanf("Credits %llu\n", &creditsCount);
-  Credit credits[creditsCount];
+  std::vector<Credit> credits;
+  credits.reserve(creditsCount);
   for (int i = 0; i < creditsCount; i++) {
-    uint64_t id;
+    Id id;
     double procent;
-    std::string type;
-    uint64_t receivedVal1, receivedVal2;
-    scanf("%llu # %le # %llu.%llu # %99[a-zA-Z0-9/_ ]\n", &id, &procent, &receivedVal1, &receivedVal2, &type);
-    credits[i] = Credit(id, procent, stringToCreditType(type), Money(receivedVal1, receivedVal2));
+    char type[100];
+    unsigned long long receivedVal1, receivedVal2;
+    Id clientId;
+    scanf("%llu # %le # %llu.%llu # %99[a-zA-Z0-9/_ ] # %llu\n", &id, &procent, &receivedVal1, &receivedVal2, &type, &clientId);
+    credits.push_back(Credit(id, procent, stringToCreditType(type), Money(receivedVal1, receivedVal2), clientId));
   }
 
-  uint64_t clientsCount;
+  Amount clientsCount;
   scanf("Clients %llu\n", &clientsCount);
-  Client clients[clientsCount];
+  std::vector<Client> clients;
+  clients.reserve(clientsCount);
   for (int i = 0; i < clientsCount; i++) {
-    uint64_t clientId;
-    std::string name;
-    std::string clientType;
+    Id clientId;
+    char name[100];
+    char clientType[100];
     scanf("%llu # %99[a-zA-Z0-9/_ ] # %99[a-zA-Z0-9/_ ]\n", &clientId, &name, &clientType);
-    clients[i] = Client(clientId, name, stringToClientType(clientType));
+    clients.push_back(Client(clientId, name, stringToClientType(clientType)));
   }
 
-  uint64_t clientDepositCount;
-  scanf("Client Debit %llu\n", &clientDepositCount);
-  ClientDepositAccount clientDeposits[clientDepositCount];
-  for (int i = 0; i < clientDepositCount; i++) {
-    uint64_t clientId, accountId, depositId;
-    scanf("%llu # %llu # %llu\n", &clientId, &accountId, &depositId);
-    clientDeposits[i] = ClientDepositAccount(clientId, accountId, depositId);
-  }
-
-  uint64_t bankAccountsCount;
+  Amount bankAccountsCount;
   scanf("Bank Accounts %llu\n", &bankAccountsCount);
-  BankAccount bankAccounts[bankAccountsCount];
+  std::vector<BankAccount> bankAccounts;
+  bankAccounts.reserve(bankAccountsCount);
   for (int i = 0; i < bankAccountsCount; i++) {
-    uint64_t id;
+    Id id;
     scanf("%llu\n", &id);
-    bankAccounts[i] = BankAccount(id);
+    bankAccounts.push_back(BankAccount(id));
   }
 
-  uint64_t clientCreditCount;
-  scanf("Client Credit %llu\n", &clientCreditCount);
-  ClientCreditAccount clientCredits[clientCreditCount];
-  for (int i = 0; i < clientCreditCount; i++) {
-    uint64_t clientId, accountId, creditId;
-    scanf("%llu # %llu # %llu\n", &clientId, &accountId, &creditId);
-    clientCredits[i] = ClientCreditAccount(clientId, accountId, creditId);
-  }
-
-  uint64_t workplaceCount;
+  Amount workplaceCount;
   scanf("Workplaces %llu\n", &workplaceCount);
-  Workplace workplaces[workplaceCount];
+  std::vector<Workplace> workplaces;
+  workplaces.reserve(workplaceCount);
   for (int i = 0; i < workplaceCount; i++) {
-    std::string type;
-    uint64_t id;
+    char type[100];
+    Id id;
     scanf("%99[a-zA-Z0-9/_ ] # %llu\n", &type, &id);
-    workplaces[i] = Workplace(stringToWorkspaceType(type), id);
+    workplaces.push_back(Workplace(stringToWorkspaceType(type), id));
   }
 
-  uint64_t exchangeRatesCount;
+  Amount exchangeRatesCount;
   scanf("Exchange Rates %llu\n", &exchangeRatesCount);
-  ExchangeRate exchangeRates[exchangeRatesCount];
+  std::vector<ExchangeRate> exchangeRates;
+  exchangeRates.reserve(exchangeRatesCount);
   for (int i = 0; i < exchangeRatesCount; i++) {
-    std::string from, to;
+    char from[100], to[100];
     double rate;
     scanf("%99[a-zA-Z0-9/_ ] # %99[a-zA-Z0-9/_ ] # %le\n", &from, &to, &rate);
-    exchangeRates[i] = ExchangeRate(stringToCurrency(from), stringToCurrency(to), rate);
+    exchangeRates.push_back(ExchangeRate(stringToCurrency(from), stringToCurrency(to), rate));
   }
 
-  bankController controller(clients, clientsCount, bankAccounts, bankAccountsCount, accounts, accountCount, credits,
-                            creditsCount, debits, debitsCount, exchangeRates, exchangeRatesCount, workplaces,
-                            workplaceCount, clientDeposits, clientDepositCount, clientCredits, clientCreditCount);
+  bankController controller(clients, bankAccounts, accounts, credits,
+                            debits, exchangeRates, workplaces);
   controller.~bankController();
   return 0;
 }

@@ -10,9 +10,8 @@ class Money {
   double round(double value) { return (((long long int)(value * 10000) + 5 * (value < 0.0 ? -1 : 1)) / 10) / 1000.0; }
 
  public:
-  Money(uint64_t value1, uint64_t value2) {
-    value = round(value1 + value2 / 100.0);
-  }
+  Money() : value(0) {};
+  Money(uint64_t value1, uint64_t value2) { value = round(value1 + value2 / 100.0); }
 
   Money& operator+=(const Money& other) {
     value += other.value;
@@ -108,13 +107,9 @@ class Money {
 
   double getValue() const { return value; }
 
-  uint64_t getVal1() const {
-    return (uint64_t)value; 
-  }
+  uint64_t getVal1() const { return (uint64_t)value; }
 
-  uint64_t getVal2() const {
-    return (uint64_t)(value * 1000) % 1000; 
-  }
+  uint64_t getVal2() const { return (uint64_t)(value * 1000) % 1000; }
 };
 
 #endif  // MONEY_H

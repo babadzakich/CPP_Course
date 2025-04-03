@@ -9,10 +9,10 @@
 #include "banklib/enums/Bank_enums.h"
 #include "banklib/staticStorage.h"
 
+#include <map>
 #include <string>
 #include <utility>
 #include <vector>
-#include <map>
 
 class bankController {
  private:
@@ -73,11 +73,10 @@ class bankController {
 
  public:
   bankController(const std::map<uint64_t, Client> clients, const std::vector<BankAccount> bankAccountsId,
-                const std::map<uint64_t, Account> accounts, const std::map<uint64_t, Credit> credits, 
-                const std::map<uint64_t, Deposit> deposits, const std::vector<ExchangeRate> exchangeRates, 
-                const std::vector<Workplace> workplaces,
-                const ClientDepositAccount clientDepositAccounts, 
-                const ClientCreditAccount clientCreditAccounts);
+                 const std::map<uint64_t, Account> accounts, const std::map<uint64_t, Credit> credits,
+                 const std::map<uint64_t, Deposit> deposits, const std::vector<ExchangeRate> exchangeRates,
+                 const std::vector<Workplace> workplaces, const ClientDepositAccount clientDepositAccounts,
+                 const ClientCreditAccount clientCreditAccounts);
 
   void startBankDay(Date date, Time time);
   void endBankDay(Date date, Time time);

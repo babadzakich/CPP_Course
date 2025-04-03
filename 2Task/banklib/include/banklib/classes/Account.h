@@ -22,8 +22,15 @@ class Account {
   uint64_t associatedId;
 
  public:
-  Account() : id(0), type(Account_Type::DEBIT), balance(Money(0, 0)), currency(Currency_Type::RUB), clientId(0), associatedId(0) {};
-  Account(uint64_t id, Account_Type type, Money balance, Currency_Type currency, uint64_t clientId, uint64_t associatedId);
+  Account()
+      : id(0),
+        type(Account_Type::DEBIT),
+        balance(Money(0, 0)),
+        currency(Currency_Type::RUB),
+        clientId(0),
+        associatedId(0) {};
+  Account(uint64_t id, Account_Type type, Money balance, Currency_Type currency, uint64_t clientId,
+          uint64_t associatedId);
   uint64_t getId() const;
   Account_Type getType() const;
   Money getBalance() const;

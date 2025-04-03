@@ -3,14 +3,18 @@
 #include <vector>
 
 bankController::bankController(const std::map<uint64_t, Client> clients, const std::vector<BankAccount> bankAccountsId,
-                               const std::map<uint64_t, Account> accounts, const std::map<uint64_t, Credit> credits, 
-                               const std::map<uint64_t, Deposit> deposits, const std::vector<ExchangeRate> exchangeRates, 
-                               const std::vector<Workplace> workplaces,
-                               const ClientDepositAccount clientDepositAccounts, 
-                               const ClientCreditAccount clientCreditAccounts) 
-                              : clients(std::move(clients)), bankAccountsId(std::move(bankAccountsId)), accounts(std::move(accounts)),
-                                credits(std::move(credits)), deposits(std::move(deposits)), exchangeRates(std::move(exchangeRates)), 
-                                workplaces(std::move(workplaces)) {}
+                               const std::map<uint64_t, Account> accounts, const std::map<uint64_t, Credit> credits,
+                               const std::map<uint64_t, Deposit> deposits,
+                               const std::vector<ExchangeRate> exchangeRates, const std::vector<Workplace> workplaces,
+                               const ClientDepositAccount clientDepositAccounts,
+                               const ClientCreditAccount clientCreditAccounts)
+    : clients(std::move(clients)),
+      bankAccountsId(std::move(bankAccountsId)),
+      accounts(std::move(accounts)),
+      credits(std::move(credits)),
+      deposits(std::move(deposits)),
+      exchangeRates(std::move(exchangeRates)),
+      workplaces(std::move(workplaces)) {}
 
 void bankController::startBankDay(Date day, Time time) {
   if (time != Time(8, 0)) {
@@ -22,7 +26,7 @@ void bankController::startBankDay(Date day, Time time) {
 }
 
 void bankController::endBankDay(Date day, Time time) {
-  if (time != Time(19, 0)) { 
+  if (time != Time(19, 0)) {
     throw std::invalid_argument("Bank day can only end at 19:00");
   }
   currentTime = time;
@@ -33,13 +37,13 @@ void bankController::endBankDay(Date day, Time time) {
       Credit& credit = credits[j];
       if (credit.getType() == Credit_Type::CHARGED_DAILY) {
         Account& account = accounts[credit.getAccountId()];
-        for (auto& bankAcc: bankAccountsId) {
+        for (auto& bankAcc : bankAccountsId) {
           if (accounts[bankAcc.getAccountId()].getCurrency() == account.getCurrency() && account.getBalance() > 0) {
             Account& bankAccount = accounts[bankAcc.getAccountId()];
             fprintf(stderr, "%llu # %llu:%llu # %llu -> %llu # %llu.%llu\n", date, currentTime.getHours(),
-                  currentTime.getMinutes(), account.getId(), bankAccount.getId(),
-                  (credit.getReceived() * credit.getDailyProcent()).getVal1(),
-                  (credit.getReceived() * credit.getDailyProcent()).getVal2());
+                    currentTime.getMinutes(), account.getId(), bankAccount.getId(),
+                    (credit.getReceived() * credit.getDailyProcent()).getVal1(),
+                    (credit.getReceived() * credit.getDailyProcent()).getVal2());
             try {
               account.takeMoney(credit.getReceived() * credit.getDailyProcent());
             } catch (const std::invalid_argument& e) {
@@ -55,15 +59,16 @@ void bankController::endBankDay(Date day, Time time) {
 
     for (auto& j : client.getDeposits()) {
       Deposit& deposit = deposits[j];
-      if (deposit.getType() == Deposit_Type::COMPOUNDED_DAILY_REMAINING || deposit.getType() == Deposit_Type::COMPOUNDED_DAILY_MIN) {
+      if (deposit.getType() == Deposit_Type::COMPOUNDED_DAILY_REMAINING ||
+          deposit.getType() == Deposit_Type::COMPOUNDED_DAILY_MIN) {
         Account& account = accounts[deposit.getAccountId()];
-        for (auto& bankAcc: bankAccountsId) {
+        for (auto& bankAcc : bankAccountsId) {
           if (accounts[bankAcc.getAccountId()].getCurrency() == account.getCurrency() && account.getBalance() > 0) {
             Account& bankAccount = accounts[bankAcc.getAccountId()];
             fprintf(stderr, "%llu # %llu:%llu # %llu -> %llu # %llu.%llu\n", date, currentTime.getHours(),
-              currentTime.getMinutes(), account.getId(), bankAccount.getId(),
-              (account.getBalance() * deposit.getDailyProcent()).getVal1(),
-              (account.getBalance() * deposit.getDailyProcent()).getVal2());
+                    currentTime.getMinutes(), account.getId(), bankAccount.getId(),
+                    (account.getBalance() * deposit.getDailyProcent()).getVal1(),
+                    (account.getBalance() * deposit.getDailyProcent()).getVal2());
             try {
               bankAccount.takeMoney(account.getBalance() * deposit.getDailyProcent());
             } catch (const std::invalid_argument& e) {
@@ -96,13 +101,13 @@ void bankController::endBankMonth(Date date, Time time) {
       Credit& credit = credits[j];
       if (credit.getType() == Credit_Type::CHARGED_MONTHLY) {
         Account& account = accounts[credit.getAccountId()];
-        for (auto& bankAcc: bankAccountsId) {
+        for (auto& bankAcc : bankAccountsId) {
           if (accounts[bankAcc.getAccountId()].getCurrency() == account.getCurrency() && account.getBalance() > 0) {
             Account& bankAccount = accounts[bankAcc.getAccountId()];
             fprintf(stderr, "%llu # %llu:%llu # %llu -> %llu # %llu.%llu\n", date, currentTime.getHours(),
-                  currentTime.getMinutes(), account.getId(), bankAccount.getId(),
-                  (credit.getReceived() * credit.getMonthlyProcent()).getVal1(),
-                  (credit.getReceived() * credit.getMonthlyProcent()).getVal2());
+                    currentTime.getMinutes(), account.getId(), bankAccount.getId(),
+                    (credit.getReceived() * credit.getMonthlyProcent()).getVal1(),
+                    (credit.getReceived() * credit.getMonthlyProcent()).getVal2());
             try {
               account.takeMoney(credit.getReceived() * credit.getMonthlyProcent());
             } catch (const std::invalid_argument& e) {
@@ -118,15 +123,16 @@ void bankController::endBankMonth(Date date, Time time) {
 
     for (auto& j : client.getDeposits()) {
       Deposit& deposit = deposits[j];
-      if (deposit.getType() == Deposit_Type::COMPOUNDED_MONTHLY_REMAINING || deposit.getType() == Deposit_Type::COMPOUNDED_MONTHLY_MIN) {
+      if (deposit.getType() == Deposit_Type::COMPOUNDED_MONTHLY_REMAINING ||
+          deposit.getType() == Deposit_Type::COMPOUNDED_MONTHLY_MIN) {
         Account& account = accounts[deposit.getAccountId()];
-        for (auto& bankAcc: bankAccountsId) {
+        for (auto& bankAcc : bankAccountsId) {
           if (accounts[bankAcc.getAccountId()].getCurrency() == account.getCurrency() && account.getBalance() > 0) {
             Account& bankAccount = accounts[bankAcc.getAccountId()];
             fprintf(stderr, "%llu # %llu:%llu # %llu -> %llu # %llu.%llu\n", date, currentTime.getHours(),
-              currentTime.getMinutes(), account.getId(), bankAccount.getId(),
-              (account.getBalance() * deposit.getMonthlyProcent()).getVal1(),
-              (account.getBalance() * deposit.getMonthlyProcent()).getVal2());
+                    currentTime.getMinutes(), account.getId(), bankAccount.getId(),
+                    (account.getBalance() * deposit.getMonthlyProcent()).getVal1(),
+                    (account.getBalance() * deposit.getMonthlyProcent()).getVal2());
             try {
               bankAccount.takeMoney(account.getBalance() * deposit.getMonthlyProcent());
             } catch (const std::invalid_argument& e) {
@@ -152,13 +158,13 @@ void bankController::endBankQuarter(Date date, Time time) {
       Credit& credit = credits[j];
       if (credit.getType() == Credit_Type::CHARGED_QUARTERLY) {
         Account& account = accounts[credit.getAccountId()];
-        for (auto& bankAcc: bankAccountsId) {
+        for (auto& bankAcc : bankAccountsId) {
           if (accounts[bankAcc.getAccountId()].getCurrency() == account.getCurrency() && account.getBalance() > 0) {
             Account& bankAccount = accounts[bankAcc.getAccountId()];
             fprintf(stderr, "%llu # %llu:%llu # %llu -> %llu # %llu.%llu\n", date, currentTime.getHours(),
-                  currentTime.getMinutes(), account.getId(), bankAccount.getId(),
-                  (credit.getReceived() * credit.getQuarterlyProcent()).getVal1(),
-                  (credit.getReceived() * credit.getQuarterlyProcent()).getVal2());
+                    currentTime.getMinutes(), account.getId(), bankAccount.getId(),
+                    (credit.getReceived() * credit.getQuarterlyProcent()).getVal1(),
+                    (credit.getReceived() * credit.getQuarterlyProcent()).getVal2());
             try {
               account.takeMoney(credit.getReceived() * credit.getQuarterlyProcent());
             } catch (const std::invalid_argument& e) {
@@ -174,15 +180,16 @@ void bankController::endBankQuarter(Date date, Time time) {
 
     for (auto& j : client.getDeposits()) {
       Deposit& deposit = deposits[j];
-      if (deposit.getType() == Deposit_Type::COMPOUNDED_QUARTERLY_REMAINING || deposit.getType() == Deposit_Type::COMPOUNDED_QUARTERLY_MIN) {
+      if (deposit.getType() == Deposit_Type::COMPOUNDED_QUARTERLY_REMAINING ||
+          deposit.getType() == Deposit_Type::COMPOUNDED_QUARTERLY_MIN) {
         Account& account = accounts[deposit.getAccountId()];
-        for (auto& bankAcc: bankAccountsId) {
+        for (auto& bankAcc : bankAccountsId) {
           if (accounts[bankAcc.getAccountId()].getCurrency() == account.getCurrency() && account.getBalance() > 0) {
             Account& bankAccount = accounts[bankAcc.getAccountId()];
             fprintf(stderr, "%llu # %llu:%llu # %llu -> %llu # %llu.%llu\n", date, currentTime.getHours(),
-              currentTime.getMinutes(), account.getId(), bankAccount.getId(),
-              (account.getBalance() * deposit.getQuarterlyProcent()).getVal1(),
-              (account.getBalance() * deposit.getQuarterlyProcent()).getVal2());
+                    currentTime.getMinutes(), account.getId(), bankAccount.getId(),
+                    (account.getBalance() * deposit.getQuarterlyProcent()).getVal1(),
+                    (account.getBalance() * deposit.getQuarterlyProcent()).getVal2());
             try {
               bankAccount.takeMoney(account.getBalance() * deposit.getQuarterlyProcent());
             } catch (const std::invalid_argument& e) {
@@ -209,13 +216,13 @@ void bankController::endBankHalfYear(Date date, Time time) {
       Credit& credit = credits[j];
       if (credit.getType() == Credit_Type::CHARGED_SEMIANNUALLY) {
         Account& account = accounts[credit.getAccountId()];
-        for (auto& bankAcc: bankAccountsId) {
+        for (auto& bankAcc : bankAccountsId) {
           if (accounts[bankAcc.getAccountId()].getCurrency() == account.getCurrency() && account.getBalance() > 0) {
             Account& bankAccount = accounts[bankAcc.getAccountId()];
             fprintf(stderr, "%llu # %llu:%llu # %llu -> %llu # %llu.%llu\n", date, currentTime.getHours(),
-                  currentTime.getMinutes(), account.getId(), bankAccount.getId(),
-                  (credit.getReceived() * credit.getSemiannualProcent()).getVal1(),
-                  (credit.getReceived() * credit.getSemiannualProcent()).getVal2());
+                    currentTime.getMinutes(), account.getId(), bankAccount.getId(),
+                    (credit.getReceived() * credit.getSemiannualProcent()).getVal1(),
+                    (credit.getReceived() * credit.getSemiannualProcent()).getVal2());
             try {
               account.takeMoney(credit.getReceived() * credit.getSemiannualProcent());
             } catch (const std::invalid_argument& e) {
@@ -231,15 +238,16 @@ void bankController::endBankHalfYear(Date date, Time time) {
 
     for (auto& j : client.getDeposits()) {
       Deposit& deposit = deposits[j];
-      if (deposit.getType() == Deposit_Type::COMPOUNDED_SEMIANUALLY_REMAINING || deposit.getType() == Deposit_Type::COMPOUNDED_SEMIANUALLY_MIN) {
+      if (deposit.getType() == Deposit_Type::COMPOUNDED_SEMIANUALLY_REMAINING ||
+          deposit.getType() == Deposit_Type::COMPOUNDED_SEMIANUALLY_MIN) {
         Account& account = accounts[deposit.getAccountId()];
-        for (auto& bankAcc: bankAccountsId) {
+        for (auto& bankAcc : bankAccountsId) {
           if (accounts[bankAcc.getAccountId()].getCurrency() == account.getCurrency() && account.getBalance() > 0) {
             Account& bankAccount = accounts[bankAcc.getAccountId()];
             fprintf(stderr, "%llu # %llu:%llu # %llu -> %llu # %llu.%llu\n", date, currentTime.getHours(),
-              currentTime.getMinutes(), account.getId(), bankAccount.getId(),
-              (account.getBalance() * deposit.getSemiannuallyProcent()).getVal1(),
-              (account.getBalance() * deposit.getSemiannuallyProcent()).getVal2());
+                    currentTime.getMinutes(), account.getId(), bankAccount.getId(),
+                    (account.getBalance() * deposit.getSemiannuallyProcent()).getVal1(),
+                    (account.getBalance() * deposit.getSemiannuallyProcent()).getVal2());
             try {
               bankAccount.takeMoney(account.getBalance() * deposit.getSemiannuallyProcent());
             } catch (const std::invalid_argument& e) {
@@ -265,13 +273,13 @@ void bankController::endBankYear(Date date, Time time) {
       Credit& credit = credits[j];
       if (credit.getType() == Credit_Type::CHARGED_ANNUALLY) {
         Account& account = accounts[credit.getAccountId()];
-        for (auto& bankAcc: bankAccountsId) {
+        for (auto& bankAcc : bankAccountsId) {
           if (accounts[bankAcc.getAccountId()].getCurrency() == account.getCurrency() && account.getBalance() > 0) {
             Account& bankAccount = accounts[bankAcc.getAccountId()];
             fprintf(stderr, "%llu # %llu:%llu # %llu -> %llu # %llu.%llu\n", date, currentTime.getHours(),
-                  currentTime.getMinutes(), account.getId(), bankAccount.getId(),
-                  (credit.getReceived() * credit.getAnnualProcent()).getVal1(),
-                  (credit.getReceived() * credit.getAnnualProcent()).getVal2());
+                    currentTime.getMinutes(), account.getId(), bankAccount.getId(),
+                    (credit.getReceived() * credit.getAnnualProcent()).getVal1(),
+                    (credit.getReceived() * credit.getAnnualProcent()).getVal2());
             try {
               account.takeMoney(credit.getReceived() * credit.getAnnualProcent());
             } catch (const std::invalid_argument& e) {
@@ -287,15 +295,16 @@ void bankController::endBankYear(Date date, Time time) {
 
     for (auto& j : client.getDeposits()) {
       Deposit& deposit = deposits[j];
-      if (deposit.getType() == Deposit_Type::COMPOUNDED_ANUALLY_REMAINING || deposit.getType() == Deposit_Type::COMPOUNDED_ANUALLY_MIN) {
+      if (deposit.getType() == Deposit_Type::COMPOUNDED_ANUALLY_REMAINING ||
+          deposit.getType() == Deposit_Type::COMPOUNDED_ANUALLY_MIN) {
         Account& account = accounts[deposit.getAccountId()];
-        for (auto& bankAcc: bankAccountsId) {
+        for (auto& bankAcc : bankAccountsId) {
           if (accounts[bankAcc.getAccountId()].getCurrency() == account.getCurrency() && account.getBalance() > 0) {
             Account& bankAccount = accounts[bankAcc.getAccountId()];
             fprintf(stderr, "%llu # %llu:%llu # %llu -> %llu # %llu.%llu\n", date, currentTime.getHours(),
-              currentTime.getMinutes(), account.getId(), bankAccount.getId(),
-              (account.getBalance() * deposit.getAnnuallyProcent()).getVal1(),
-              (account.getBalance() * deposit.getAnnuallyProcent()).getVal2());
+                    currentTime.getMinutes(), account.getId(), bankAccount.getId(),
+                    (account.getBalance() * deposit.getAnnuallyProcent()).getVal1(),
+                    (account.getBalance() * deposit.getAnnuallyProcent()).getVal2());
             try {
               bankAccount.takeMoney(account.getBalance() * deposit.getAnnuallyProcent());
             } catch (const std::invalid_argument& e) {
@@ -329,7 +338,7 @@ uint64_t bankController::registerNewClient(const std::string& name, Client_Type 
 }
 
 bool bankController::isClientExists(const std::string& name) const {
-  for (auto& client: clients) {
+  for (auto& client : clients) {
     if (client.second.getName() == name) {
       return true;
     }
@@ -377,8 +386,8 @@ bool bankController::canOperationBeHandledAtWorkplace(Operation_Type op, Workspa
   }
 }
 
-void bankController::handlePersonalAppeal(const std::string& name, Client_Type type, std::vector<Operation_Type> operations) 
-{
+void bankController::handlePersonalAppeal(const std::string& name, Client_Type type,
+                                          std::vector<Operation_Type> operations) {
   Client client;
   bool isClient = false;
   for (auto& clientt : clients) {
@@ -432,22 +441,22 @@ void bankController::client_getBalance(uint64_t clientId, uint64_t accountId) {
   if (accounts.count(accountId) == 0) {
     throw std::invalid_argument("Client error. Unknown account");
   }
-  
+
   Client& client = clients[clientId];
   if (client.getCredits().find(accountId) != client.getCredits().end()) {
     printf("%llu # %llu:%llu # Balance of %llu # %llu.%llu", date, currentTime.getHours(), currentTime.getMinutes(),
-            accountId, accounts[accountId].getBalance().getVal1(), accounts[clientId].getBalance().getVal2());
+           accountId, accounts[accountId].getBalance().getVal1(), accounts[clientId].getBalance().getVal2());
     if (currentTime >= Time(19, 00))
       bankController::endBankDay(date, currentTime);
     return;
-  }  
-  
+  }
+
   if (client.getDeposits().find(accountId) != client.getDeposits().end()) {
     printf("%llu # %llu:%llu # Balance of %llu # %llu.%llu", date, currentTime.getHours(), currentTime.getMinutes(),
-              accountId, accounts[accountId].getBalance().getVal1(), accounts[accountId].getBalance().getVal2());
-      if (currentTime >= Time(19, 00))
-        bankController::endBankDay(date, currentTime);
-      return;
+           accountId, accounts[accountId].getBalance().getVal1(), accounts[accountId].getBalance().getVal2());
+    if (currentTime >= Time(19, 00))
+      bankController::endBankDay(date, currentTime);
+    return;
   }
   throw std::invalid_argument("Client error. Access denied");
 }
@@ -457,22 +466,27 @@ bool bankController::checkClientAccountCount(uint64_t clientId, Currency_Type cu
   int count = 0;
   for (auto& id : client.getDeposits()) {
     Account& dep = accounts[id];
-    if (dep.getCurrency() == currency) count++;
-    if (count == StaticStorage::maxClientAccountsAmount[(uint64_t)currency][(uint64_t)clientType]) return false;
+    if (dep.getCurrency() == currency)
+      count++;
+    if (count == StaticStorage::maxClientAccountsAmount[(uint64_t)currency][(uint64_t)clientType])
+      return false;
   }
   return true;
 }
 
-void bankController::client_openAccount(uint64_t clientId, Money amount, Currency_Type currency, Client_Type clientType) {
+void bankController::client_openAccount(uint64_t clientId, Money amount, Currency_Type currency,
+                                        Client_Type clientType) {
   if (!checkClientAccountCount(clientId, currency, clientType))
     throw std::invalid_argument("Client error. Active account limit reached");
 
   currentTime += 10;
-  Account account(accID++, Account_Type::DEPOSIT, Money(-StaticStorage::openClientMoney[(int)currency][(int)clientType], 0), currency, clientId, depID);
+  Account account(accID++, Account_Type::DEPOSIT,
+                  Money(-StaticStorage::openClientMoney[(int)currency][(int)clientType], 0), currency, clientId, depID);
   accounts[account.getId()] = account;
   Deposit deposit(depID++, 0.0, Deposit_Type::COMPOUNDED_ANUALLY_MIN, date, 0, accID - 1);
   deposits[deposit.getId()] = deposit;
-  printf("%llu # %llu:%llu # Account Created %llu # %llu.%llu", date, currentTime.getHours(), currentTime.getMinutes(), account.getId(), account.getBalance().getVal1(), account.getBalance().getVal2());
+  printf("%llu # %llu:%llu # Account Created %llu # %llu.%llu", date, currentTime.getHours(), currentTime.getMinutes(),
+         account.getId(), account.getBalance().getVal1(), account.getBalance().getVal2());
 }
 
 void bankController::client_closeAccount(uint64_t clientId, uint64_t accountId) {
@@ -483,7 +497,8 @@ void bankController::client_closeAccount(uint64_t clientId, uint64_t accountId) 
   }
 
   Client& client = clients[clientId];
-  if (client.getCredits().find(accountId) == client.getCredits().end() && client.getDeposits().find(accountId) == client.getDeposits().end()) {
+  if (client.getCredits().find(accountId) == client.getCredits().end() &&
+      client.getDeposits().find(accountId) == client.getDeposits().end()) {
     throw std::invalid_argument("Client error. Access denied");
   }
 
@@ -498,8 +513,8 @@ void bankController::client_closeAccount(uint64_t clientId, uint64_t accountId) 
     if (credit.getReceived() > account.getBalance()) {
       throw std::invalid_argument("Credit in action");
     }
-    printf("%llu # %llu:%llu # Account closed %llu # %llu.%llu", date, currentTime.getHours(),
-           currentTime.getMinutes(), accountId, account.getBalance().getVal1(), account.getBalance().getVal2());
+    printf("%llu # %llu:%llu # Account closed %llu # %llu.%llu", date, currentTime.getHours(), currentTime.getMinutes(),
+           accountId, account.getBalance().getVal1(), account.getBalance().getVal2());
     return;
   }
 
@@ -526,7 +541,8 @@ void bankController::client_withdrawFunds(uint64_t clientId, uint64_t accountId,
 
   Client& client = clients[clientId];
 
-  if ((client.getCredits().find(accountId) == client.getCredits().end() && client.getDeposits().find(accountId) == client.getDeposits().end())) {
+  if ((client.getCredits().find(accountId) == client.getCredits().end() &&
+       client.getDeposits().find(accountId) == client.getDeposits().end())) {
     throw std::invalid_argument("Client error. Access denied");
   }
 
@@ -548,9 +564,8 @@ void bankController::client_withdrawFunds(uint64_t clientId, uint64_t accountId,
     Money totalDeposits(0, 0);
     for (auto& dep : accounts) {
       Account& depositAccount = dep.second;
-      if ((depositAccount.getType() == Account_Type::DEPOSIT 
-      || depositAccount.getType() == Account_Type::DEBIT) 
-      && depositAccount.getCurrency() == account.getCurrency()) {
+      if ((depositAccount.getType() == Account_Type::DEPOSIT || depositAccount.getType() == Account_Type::DEBIT) &&
+          depositAccount.getCurrency() == account.getCurrency()) {
         totalDeposits += depositAccount.getBalance();
       }
     }
@@ -600,7 +615,7 @@ void bankController::client_depositFunds(uint64_t clientId, uint64_t accountId, 
   if (isLoanAccount) {
     if (client.getCredits().find(accountId) == client.getCredits().end()) {
       throw std::invalid_argument("Client error. Access denied");
-    } 
+    }
   } else {
     if (client.getDeposits().find(accountId) == client.getDeposits().end()) {
       throw std::invalid_argument("Client error. Access denied");
@@ -659,7 +674,8 @@ void bankController::client_getLoan(uint64_t clientId, Currency_Type currency, C
   Account creditAccount(accID, Account_Type::CREDIT, Money(0, 0) - fee, currency, clientId, credID);
   accounts[accID++] = creditAccount;
 
-  Credit credit(credID, StaticStorage::loanInterestRates[(int)currency][(int)client.getClientType()], creditType, amount, accID - 1);
+  Credit credit(credID, StaticStorage::loanInterestRates[(int)currency][(int)client.getClientType()], creditType,
+                amount, accID - 1);
   credits[credID++] = credit;
 
   printf("%llu # %llu:%llu # Loan Approved %llu", date, currentTime.getHours(), currentTime.getMinutes(),
@@ -670,7 +686,8 @@ void bankController::client_getLoan(uint64_t clientId, Currency_Type currency, C
   }
 }
 
-void bankController::client_requestCreditCard(uint64_t clientId, Currency_Type currency, Credit_Type creditType, Money amount) {
+void bankController::client_requestCreditCard(uint64_t clientId, Currency_Type currency, Credit_Type creditType,
+                                              Money amount) {
   currentTime += 10;
 
   if (clients.find(clientId) == clients.end()) {
@@ -692,19 +709,18 @@ void bankController::client_requestCreditCard(uint64_t clientId, Currency_Type c
   }
 }
 
-void bankController::client_getCreditCard(uint64_t clientId, Currency_Type currency, Credit_Type creditType, Money amount) {
+void bankController::client_getCreditCard(uint64_t clientId, Currency_Type currency, Credit_Type creditType,
+                                          Money amount) {
   currentTime += 5;
 
   if (clients.find(clientId) == clients.end()) {
     throw std::invalid_argument("Client not found");
   }
   Client& client = clients[clientId];
-  
+
   auto appIt = pendingCreditCardApplications.find(clientId);
-  if (appIt == pendingCreditCardApplications.end() || 
-      appIt->second.getCurrency() != currency ||
-      appIt->second.getCreditType() != creditType ||
-      appIt->second.getAmount() != amount) {
+  if (appIt == pendingCreditCardApplications.end() || appIt->second.getCurrency() != currency ||
+      appIt->second.getCreditType() != creditType || appIt->second.getAmount() != amount) {
     throw std::invalid_argument("Client error. No matching credit card application found");
   }
 
@@ -736,12 +752,12 @@ void bankController::client_getCreditCard(uint64_t clientId, Currency_Type curre
   Account creditAccount(accID, Account_Type::CREDIT, amount + openingFee, currency, clientId, credID);
   accounts[accID++] = creditAccount;
 
-  Credit credit(credID, StaticStorage::creditCardInterestRates[(int)currency][(int)client.getClientType()], 
-                creditType, amount, accID - 1);
+  Credit credit(credID, StaticStorage::creditCardInterestRates[(int)currency][(int)client.getClientType()], creditType,
+                amount, accID - 1);
   credits[credID++] = credit;
 
   printf("%llu # %llu:%llu # Credit Card Approved # %llu # %llu.%llu", date, currentTime.getHours(),
-         currentTime.getMinutes(), creditAccount.getId(), creditAccount.getBalance().getVal1(), 
+         currentTime.getMinutes(), creditAccount.getId(), creditAccount.getBalance().getVal1(),
          creditAccount.getBalance().getVal2());
 
   pendingCreditCardApplications.erase(appIt);
@@ -762,13 +778,13 @@ void bankController::client_makeDeposit(uint64_t clientId, Currency_Type currenc
 
   uint64_t durationDays;
   int durationIdx;
-  if (duration == 3) { 
+  if (duration == 3) {
     durationDays = 90;
     durationIdx = 0;
-  } else if (duration == 6) { 
+  } else if (duration == 6) {
     durationDays = 182;
     durationIdx = 1;
-  } else if (duration == 12) { 
+  } else if (duration == 12) {
     durationDays = 365;
     durationIdx = 2;
   } else if (duration == 24) {
@@ -800,8 +816,8 @@ void bankController::client_makeDeposit(uint64_t clientId, Currency_Type currenc
     }
   }
 
-  printf("%llu # %llu:%llu # Deposit Approved # %llu", date, currentTime.getHours(),
-         currentTime.getMinutes(), account.getId());
+  printf("%llu # %llu:%llu # Deposit Approved # %llu", date, currentTime.getHours(), currentTime.getMinutes(),
+         account.getId());
 
   if (currentTime >= Time(19, 00)) {
     endBankDay(date, Time(19, 0));
@@ -837,13 +853,10 @@ void bankController::client_getDebitCard(uint64_t clientId, Currency_Type curren
   Client& client = clients[clientId];
 
   auto appIt = pendingDebitCardApplications.find(clientId);
-  if (appIt == pendingDebitCardApplications.end() || 
-      appIt->second.getCurrency() != currency ||
+  if (appIt == pendingDebitCardApplications.end() || appIt->second.getCurrency() != currency ||
       appIt->second.getDepositType() != depositType) {
     throw std::invalid_argument("Client error. No matching credit card application found");
   }
-
-
 
   uint64_t daysSinceApplication = date - appIt->second.getApplicationDate();
   if (daysSinceApplication < 5) {
@@ -863,9 +876,9 @@ void bankController::client_getDebitCard(uint64_t clientId, Currency_Type curren
        depositType == Deposit_Type::COMPOUNDED_QUARTERLY_MIN ||
        depositType == Deposit_Type::COMPOUNDED_SEMIANUALLY_MIN || depositType == Deposit_Type::COMPOUNDED_ANUALLY_MIN);
 
-  Deposit deposit(depID,
-    StaticStorage::debitCardInterestRates[(int)currency][isMinimumType ? 1 : 0][(int)client.getClientType()],
-                  depositType, date, 0, accID-1);
+  Deposit deposit(
+      depID, StaticStorage::debitCardInterestRates[(int)currency][isMinimumType ? 1 : 0][(int)client.getClientType()],
+      depositType, date, 0, accID - 1);
   deposits[depID++] = deposit;
 
   printf("%llu # %llu:%llu # Debit Card Approved # %llu", date, currentTime.getHours(), currentTime.getMinutes(),
@@ -946,12 +959,13 @@ void bankController::handleTelephoneInquiry(const std::string& name, uint64_t ac
   Client& client = clients[clientId];
 
   bool found = false;
-  
+
   if (accounts.find(accountId) == accounts.end()) {
     throw std::invalid_argument("Incorrect telephone operation. Unknown account");
   }
 
-  if (client.getCredits().find(accountId) == client.getCredits().end() || client.getDeposits().find(accountId) == client.getDeposits().end()) {
+  if (client.getCredits().find(accountId) == client.getCredits().end() ||
+      client.getDeposits().find(accountId) == client.getDeposits().end()) {
     throw std::runtime_error("Client error. Access denied");
   }
 
@@ -1036,7 +1050,7 @@ void bankController::handleOnlineTransferBetweenMyAccounts(uint64_t fromAccountI
     throw std::runtime_error("Incorrect online operation. Unknown account");
   }
 
-  Account& fromAccount = accounts[fromAccountId], toAccount = accounts[toAccountId];
+  Account &fromAccount = accounts[fromAccountId], toAccount = accounts[toAccountId];
 
   if (fromAccount.getClientId() != toAccount.getClientId()) {
     throw std::runtime_error("Incorrect online operation. Access denied");
@@ -1044,7 +1058,7 @@ void bankController::handleOnlineTransferBetweenMyAccounts(uint64_t fromAccountI
 
   uint64_t clientId = fromAccount.getClientId();
   Client& client = clients[clientId];
-  
+
   Credit* credit = nullptr;
   bool isLoanAccount = false;
   if (client.getCredits().find(toAccountId) != client.getCredits().end()) {
@@ -1091,7 +1105,7 @@ void bankController::handleOnlineTransfer(uint64_t fromAccountId, uint64_t toAcc
     throw std::runtime_error("Incorrect online operation. Unknown account");
   }
 
-  Account& fromAccount = accounts[fromAccountId], toAccount = accounts[toAccountId];
+  Account &fromAccount = accounts[fromAccountId], toAccount = accounts[toAccountId];
 
   if (fromAccount.getClientId() != toAccount.getClientId()) {
     throw std::runtime_error("Incorrect online operation. Access denied");

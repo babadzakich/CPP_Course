@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(task_1)
+project(task_2)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS YES)
 

@@ -1,8 +1,10 @@
 #pragma once
 #include <sys/types.h>
+#include "banklib/Money.h"
+#include "banklib/Types.h"
 
 class StaticStorage {
-  public:
+ public:
   static const uint64_t openClientMoney[4][4];
 
   static const uint64_t maxClientAccountsAmount[4][4];
@@ -13,7 +15,7 @@ class StaticStorage {
 
   static const double debitCardInterestRates[4][2][4];
 
-  static const double FRACTIONAL_RESERVE_LIMIT = 0.8;
+  constexpr static const double FRACTIONAL_RESERVE_LIMIT = 0.8;
 
   static const uint64_t loanLimits[4][4];
 

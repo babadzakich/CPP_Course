@@ -5,9 +5,9 @@
 #ifndef DEPOSIT_TYPE_H
 #define DEPOSIT_TYPE_H
 
-#include "banklib/Types.h"
-#include <string>
 #include <stdexcept>
+#include <string>
+#include "banklib/Types.h"
 
 enum class Deposit_Type {
   COMPOUNDED_DAILY_REMAINING,

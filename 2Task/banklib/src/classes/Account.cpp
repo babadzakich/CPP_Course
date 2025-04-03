@@ -4,7 +4,8 @@
 
 #include "banklib/classes/Account.h"
 
-Account::Account(uint64_t id, Account_Type type, Money balance, Currency_Type currency, uint64_t clientId, uint64_t associatedId)
+Account::Account(uint64_t id, Account_Type type, Money balance, Currency_Type currency, uint64_t clientId,
+                 uint64_t associatedId)
     : id(id), type(type), balance(balance), currency(currency), clientId(clientId), associatedId(associatedId) {}
 
 uint64_t Account::getId() const {

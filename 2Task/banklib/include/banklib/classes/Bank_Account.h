@@ -15,5 +15,4 @@ class BankAccount {
   uint64_t getAccountId() const;
 };
 
-
 #endif  // BANK_ACCOUNT_H

@@ -15,7 +15,7 @@ class Client {
   Client_Type clientType;
   std::set<accountID> deposits;
   std::set<accountID> credits;
-  
+
  public:
   Client() : clientId(0), name(""), clientType(Client_Type::INDIVIDUAL_CLIENT) {};
   Client(uint64_t clientId, const std::string& name, Client_Type clientType);
@@ -23,7 +23,7 @@ class Client {
   uint64_t getClientId() const;
   std::string getName() const;
   Client_Type getClientType() const;
-  
+
   std::set<accountID> getCredits() const;
   std::set<accountID> getDeposits() const;
 };

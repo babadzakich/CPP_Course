@@ -1,76 +1,183 @@
 @startuml BankSequences
 
-' Client Operation Sequence
 actor Client
 participant "Bank Controller" as BC
 participant "Account" as Acc
 participant "Client" as Cl
 participant "Credit" as Cr
 participant "Deposit" as Dep
+participant "Exchange Rate" as ER
+participant "Bank Account" as BA
 
-' Open Account Sequence
-group Open Account
+' Bank Day Operations
+group Bank Day Management
+    Client -> BC: startBankDay(date, time)
+    activate BC
+    alt Invalid Time
+        BC --> Client: throw invalid_argument
+    else Valid Time
+        BC -> BC: update currentTime and date
+        BC --> Client: day started
+    end
+    deactivate BC
+
+    Client -> BC: endBankDay(date, time)
+    activate BC
+    alt Invalid Time
+        BC --> Client: throw invalid_argument
+    else Valid Time
+        BC -> Cr: process daily credits
+        BC -> Dep: process daily deposits
+        BC -> BC: update workplace statistics
+        BC --> Client: day ended
+    end
+    deactivate BC
+end
+
+' Account Operations
+group Account Management
     Client -> BC: handleClientOperation(clientId, OPEN_ACCOUNT)
     activate BC
     BC -> BC: checkClientAccountCount()
-    BC -> Acc: create new Account
-    BC -> Dep: create new Deposit
-    BC -> Cl: add to deposits
-    BC --> Client: account created
+    alt Count Exceeded
+        BC --> Client: throw invalid_argument
+    else Count OK
+        BC -> Acc: create new Account
+        BC -> Dep: create new Deposit
+        BC -> Cl: add to deposits
+        BC --> Client: account created
+    end
     deactivate BC
-end
 
-' Check Balance Sequence
-group Check Balance
     Client -> BC: handleClientOperation(clientId, CHECK_BALANCE)
     activate BC
     BC -> Cl: validate client
-    BC -> Acc: getBalance()
-    BC --> Client: balance info
+    alt Invalid Client
+        BC --> Client: throw invalid_argument
+    else Valid Client
+        BC -> Acc: getBalance()
+        BC --> Client: balance info
+    end
+    deactivate BC
+
+    Client -> BC: handleClientOperation(clientId, CLOSE_ACCOUNT)
+    activate BC
+    BC -> BC: validateAccount()
+    alt Invalid Account
+        BC --> Client: throw invalid_argument
+    else Account Has Balance
+        BC -> Acc: calculate closing fee
+        BC -> Acc: process final balance
+        BC -> Cl: remove account
+        BC --> Client: account closed
+    end
     deactivate BC
 end
 
-' Get Loan Sequence
-group Get Loan
+' Credit Operations
+group Credit Management
     Client -> BC: handleClientOperation(clientId, GET_LOAN)
     activate BC
     BC -> BC: validateLoanAmount()
-    BC -> Acc: create credit account
-    BC -> Cr: create credit
-    BC -> Cl: add to credits
-    BC --> Client: loan approved
+    alt Amount Exceeds Limit
+        BC --> Client: throw invalid_argument
+    else Valid Amount
+        BC -> BA: check bank funds
+        alt Insufficient Bank Funds
+            BC --> Client: throw runtime_error
+        else Sufficient Funds
+            BC -> Acc: create credit account
+            BC -> Cr: create credit
+            BC -> Cl: add to credits
+            BC --> Client: loan approved
+        end
+    end
+    deactivate BC
+
+    Client -> BC: handleClientOperation(clientId, APPLY_CREDIT_CARD)
+    activate BC
+    BC -> BC: validateCreditCardApplication()
+    BC -> BC: storePendingApplication()
+    BC --> Client: application received
+    deactivate BC
+
+    Client -> BC: handleClientOperation(clientId, GET_CREDIT_CARD)
+    activate BC
+    BC -> BC: validatePendingApplication()
+    alt Invalid Application
+        BC --> Client: throw invalid_argument
+    else Valid Application
+        BC -> Acc: create credit card account
+        BC -> Cr: setup credit card
+        BC --> Client: credit card issued
+    end
     deactivate BC
 end
 
-' Exchange Currency Sequence
-group Exchange Currency
+' Currency Operations
+group Currency Exchange
     Client -> BC: handleClientOperation(clientId, EXCHANGE_CURRENCY)
     activate BC
-    BC -> BC: findExchangeRate()
-    BC -> Acc: takeMoney()
-    BC -> Acc: putMoney()
-    BC --> Client: exchange complete
+    BC -> ER: getExchangeRate()
+    alt Rate Not Found
+        BC --> Client: throw invalid_argument
+    else Rate Found
+        BC -> BC: calculateExchangeAmount()
+        BC -> BA: check bank currency reserves
+        alt Insufficient Reserves
+            BC --> Client: throw runtime_error
+        else Sufficient Reserves
+            BC -> Acc: takeMoney()
+            BC -> Acc: putMoney()
+            BC --> Client: exchange complete
+        end
+    end
     deactivate BC
 end
 
-' Online Operations Sequence
-group Online Operations
+' Online Operations
+group Online Banking
     Client -> BC: handleOnlineTransfer()
     activate BC
     BC -> BC: validateAccounts()
-    BC -> Acc: takeMoney()
-    BC -> Acc: putMoney()
-    BC --> Client: transfer complete
+    alt Invalid Accounts
+        BC --> Client: throw invalid_argument
+    else Valid Accounts
+        BC -> BC: calculateTransferFee()
+        BC -> Acc: checkBalance()
+        alt Insufficient Funds
+            BC --> Client: throw runtime_error
+        else Sufficient Funds
+            BC -> Acc: takeMoney()
+            BC -> Acc: putMoney()
+            BC --> Client: transfer complete
+        end
+    end
+    deactivate BC
+
+    Client -> BC: handleOnlineCreditCardPayment()
+    activate BC
+    BC -> BC: validateCreditCard()
+    alt Invalid Card
+        BC --> Client: throw invalid_argument
+    else Valid Card
+        BC -> Acc: processPayment()
+        BC --> Client: payment complete
+    end
     deactivate BC
 end
 
-' Day End Sequence
-group End Bank Day
-    BC -> BC: endBankDay()
+' Telephone Operations
+group Telephone Banking
+    Client -> BC: handleTelephoneInquiry()
     activate BC
-    BC -> Cr: process daily credits
-    BC -> Dep: process daily deposits
-    BC -> BC: update statistics
+    BC -> BC: validateClientIdentity()
+    alt Invalid Identity
+        BC --> Client: throw invalid_argument
+    else Valid Identity
+        BC -> Acc: getBalance()
+        BC --> Client: balance info
+    end
     deactivate BC
 end
 
