@@ -7,18 +7,13 @@
 #include <memory>
 #include "Regex_node.h"
 
-
-
-
 class Regex {
-    std::unique_ptr<Regex_node> ast;
-    public:
-    Regex(const std::string& pattern);
+  std::unique_ptr<Regex_node> ast;
 
-    bool match(const std::string& input) const;
+ public:
+  Regex(const std::string& pattern);
 
+  bool match(const std::string& input) const;
 };
 
-
-
-#endif //REGEX_H
+#endif  //REGEX_H

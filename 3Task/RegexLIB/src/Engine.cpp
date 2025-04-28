@@ -13,86 +13,71 @@
 #include "Nodes/Node_Sequence.h"
 
 std::unique_ptr<Regex_node> Engine::parse_sequence() {
-    auto sequence = std::make_unique<Node_Sequence>();
+  auto sequence = std::make_unique<Node_Sequence>();
 
-    while (pos < pattern.size() && pattern[pos] != ')') {
-        auto element = parse_element();
-        if (element) {
-            sequence->children.push_back(std::move(element));
-        }
+  while (pos < pattern.size()) {
+    auto element = parse_element();
+    if (element) {
+      sequence->children.push_back(std::move(element));
     }
+  }
 
-    return sequence;
+  return sequence;
 }
 
 std::unique_ptr<Regex_node> Engine::parse_element() {
-    auto atom = parse_atom();
-    if (!atom) return nullptr;
+  auto atom = parse_atom();
+  if (!atom)
+    return nullptr;
 
-    if (pos < pattern.size() && strchr("*+?", pattern[pos])) {
-        char quantifier = pattern[pos++];
-        return std::make_unique<Node_Quantifier>(std::move(atom), quantifier);
-    }
+  if (pos < pattern.size() && strchr("*+?", pattern[pos])) {
+    char quantifier = pattern[pos++];
+    return std::make_unique<Node_Quantifier>(std::move(atom), quantifier);
+  }
 
-    return atom;
+  return atom;
 }
 
 std::unique_ptr<Regex_node> Engine::parse_atom() {
-    if (pos >= pattern.size()) return nullptr;
-
-    char c = pattern[pos];
-    if (c == '[') {
-        pos++;
-        return parse_char_class();
-    }
-    if (c == '\\') {
-        if (pos + 1 >= pattern.size()) {
-            throw std::runtime_error("Unexpected end of pattern after \\");
-        }
-        pos++;
-        c = pattern[pos++];
-        return std::make_unique<Node_Regular>(c);
-    }
-    if (c == '.' || (c != '*' && c != '+' && c != '?' && c != ']')) {
-        pos++;
-        return std::make_unique<Node_Regular>(c);
-    }
-
+  if (pos >= pattern.size())
     return nullptr;
+
+  char c = pattern[pos];
+  if (c == '[') {
+    pos++;
+    return parse_char_class();
+  }
+
+  if (c == '.' || (c != '*' && c != '+' && c != '?')) {
+    pos++;
+    return std::make_unique<Node_Regular>(c, false);
+  }
+
+  return nullptr;
 }
 
 std::unique_ptr<Regex_node> Engine::parse_char_class() {
-    bool negated = false;
-    if (pos < pattern.size() && pattern[pos] == '^') {
-        negated = true;
-        pos++;
+
+
+  auto char_class = std::make_unique<Node_Group>();
+
+  while (pos < pattern.size() && pattern[pos] != ']') {
+    char c = pattern[pos++];
+    if (c == '-') {
+      const char prev = pattern[pos - 2];
+      const char next = pattern[pos];
+      for (char i = prev; i < next; i++) {
+        char_class->data.insert(i);
+      }
+      continue;
     }
+    char_class->data.insert(c);
+  }
 
-    auto char_class = std::make_unique<Node_Group>(negated);
+  if (pos >= pattern.size() || pattern[pos] != ']') {
+    throw std::runtime_error("Unclosed character class");
+  }
+  pos++;
 
-    while (pos < pattern.size() && pattern[pos] != ']') {
-        char c = pattern[pos++];
-        if (c == '-') {
-            const char prev = pattern[pos - 2];
-            const char next = pattern[pos];
-            for (char i = prev; i < next; i++) {
-                char_class->data.insert(i);
-            }
-            continue;
-        }
-        if (c == '\\') {
-            if (pos >= pattern.size()) {
-                throw std::runtime_error("Unexpected end of pattern after \\");
-            }
-            c = pattern[pos++];
-        }
-        char_class->data.insert(c);
-    }
-
-    if (pos >= pattern.size() || pattern[pos] != ']') {
-        throw std::runtime_error("Unclosed character class");
-    }
-    pos++;
-
-    return char_class;
+  return char_class;
 }

@@ -4,20 +4,16 @@
 
 #ifndef NODE_GROUP_H
 #define NODE_GROUP_H
-#include "Regex_node.h"
 #include <unordered_set>
-
+#include "Regex_node.h"
 
 class Node_Group : public Regex_node {
-    public:
-    std::unordered_set<char> data;
-    bool negated = false;
-    Node_Group(bool negated = false) : negated(negated) {};
+ public:
+  std::unordered_set<char> data;
+  Node_Group() {};
 
-    bool match(const std::string &input, size_t &pos) const override;
-    Node_type get_type() const override { return Node_type::GROUP; }
+  bool match(const std::string& input, size_t& pos) const override;
+  Node_type get_type() const override { return Node_type::GROUP; }
 };
 
-
-
-#endif //NODE_GROUP_H
+#endif  //NODE_GROUP_H
