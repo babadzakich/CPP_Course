@@ -6,6 +6,8 @@ add_library(3DEngine STATIC
     "src/MultithreadEngine/MultithreadEngine.cpp")
 
 find_package(Threads REQUIRED)
+find_package(CLI11 CONFIG REQUIRED)
+
 
 target_include_directories(3DEngine PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -28,9 +30,16 @@ install(EXPORT 3DEngineTargets
 )
 
 add_executable(engine main.cpp)
-target_link_libraries(engine PRIVATE 3DEngine)
+target_link_libraries(engine PRIVATE 3DEngine CLI11::CLI11)
 
 install(TARGETS engine
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
+add_executable(generator generator.cpp)
+target_link_libraries(generator PRIVATE 3DEngine)
+
+install(TARGETS generator
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 

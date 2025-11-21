@@ -11,7 +11,10 @@
 #include <random>
 #include <fstream>
 
-std::unique_ptr<BaseEngine> create_engine(const std::string& engine_type, const size_t amount, const size_t threads = 0) {
+#include "CLI/CLI.hpp"
+
+std::unique_ptr<BaseEngine> create_engine(const std::string& engine_type, const size_t amount, const size_t threads) {
+    std::cout << "Creating engine of type: " << engine_type << " with amount: " << amount << "\n";
   if (engine_type == "simple") {
     return std::make_unique<SimpleEngine>(amount);
   } else if (engine_type == "binary") {
@@ -35,15 +38,10 @@ void generate_test_data(const std::string& filename, size_t particle_count, unsi
   std::uniform_real_distribution<double> mass_dist(1.0, 5.0);
   std::uniform_real_distribution<double> radius_dist(0.5, 2.0);
 
-  std::ofstream file(filename);
+  std::ofstream file(filename, std::ios::binary);
   if (!file.is_open()) {
     throw std::runtime_error("Failed to create test file");
   }
-
-  uint64_t count = particle_count;
-//   file.write(reinterpret_cast<const char*>(&count), sizeof(count));
-//   file << count << "\n";
-
 
   for (size_t i = 0; i < particle_count; ++i) {
     Particle p;
@@ -52,10 +50,10 @@ void generate_test_data(const std::string& filename, size_t particle_count, unsi
     p.vel = Vec3(vel_dist(rng), vel_dist(rng), vel_dist(rng));
     p.mass = mass_dist(rng);
     p.radius = radius_dist(rng);
-    file << i << " " << p.pos.x << " " << p.pos.y << " " << p.pos.z << " "
-         << p.vel.x << " " << p.vel.y << " " << p.vel.z << " "
-         << p.mass << " " << p.radius << "\n";
-    // file.write(reinterpret_cast<const char*>(&p), sizeof(Particle));
+    // file << i << " " << p.pos.x << " " << p.pos.y << " " << p.pos.z << " "
+    //      << p.vel.x << " " << p.vel.y << " " << p.vel.z << " "
+    //      << p.mass << " " << p.radius << "\n";
+    file.write(reinterpret_cast<const char*>(&p), sizeof(Particle));
   }
 }
 
@@ -65,7 +63,7 @@ struct BenchResult {
   Metrics metrics;
 };
 
-BenchResult benchmark_engine(BaseEngine* engine, const std::string& name,
+BenchResult benchmark_engine(std::unique_ptr<BaseEngine> engine, const std::string& name,
                             const std::string& test_file, size_t warmup_steps, size_t work_steps) {
   BenchResult result{name, {}};
 
@@ -112,45 +110,47 @@ BenchResult benchmark_engine(BaseEngine* engine, const std::string& name,
 }
 
 int main(int argc, char* argv[]) {
-    if(argc < 2) {
-        std::cout << "Usage: " << argv[0] << " <engine_type>\n";
-        std::cout << "Engine types: simple, binary, spat_hash, soa, multithread\n";
-        return 1;
-    }
-  std::cout << "=== 3D Engine Benchmark Suite ===\n\n";
+  CLI::App app{"3D Engine Benchmarking Tool"};
 
-  // Test parameters
-  const size_t test_sizes[] = {100, 1000, 10000};
-  const size_t warmup_steps = 5;
-  const size_t work_steps = 20;
+  std::string engine_type = "simple";
+  app.add_option("-e, --engine", engine_type, "Type of engine to benchmark (simple, binary, spat_hash, soa, multithread)")->required();
 
-  for (size_t particle_count : test_sizes) {
-    std::cout << "\n### Testing with " << particle_count << " particles ###\n";
+  size_t threads = std::thread::hardware_concurrency();
+  app.add_option("-t, --threads", threads, "Number of threads for multithreaded engine")->default_val(threads);
 
-    // Generate test data
-    std::string test_file = "test_" + std::to_string(particle_count) + ".bin";
-    generate_test_data(test_file, particle_count);
+  std::string test_data_file;
+  app.add_option("-f, --file", test_data_file, "Test data file")->required();
 
-    std::vector<BenchResult> results;
+  size_t particle_count;
+  app.add_option("-p, --particles", particle_count, "Number of particles")->required();
 
-    // SimpleEngine
-    {
-      std::cout << "\n> Benchmarking SimpleEngine...\n";
-      try {
-        auto result = benchmark_engine(create_engine(std::string(argv[1]), particle_count).get(), std::string(argv[1]), test_file, warmup_steps, work_steps);
-        results.push_back(result);
-      } catch (const std::exception& e) {
-        std::cout << "  ERROR: " << e.what() << "\n";
-      }
-    }
+  size_t warmup_steps = 10;
+  app.add_option("-w, --warmup", warmup_steps, "Number of warmup steps")->default_val(warmup_steps);
+  size_t work_steps = 100;
+  app.add_option("-W, --work", work_steps, "Number of work steps")->default_val(work_steps);
 
-    // Print results
-    std::cout << "\n### Results Summary ###\n";
-    for (const auto& result : results) {
-      result.metrics.print(result.name);
-    }
+  CLI11_PARSE(app, argc, argv);
+
+  if (engine_type == "simple" && test_data_file.contains(".bin")) {
+    throw std::invalid_argument("SimpleEngine does not support binary files.");
   }
 
-  std::cout << "\n=== Benchmark Complete ===\n";
+  std::vector<BenchResult> results;
+
+  // SimpleEngine
+  std::cout << "\n> Benchmarking SimpleEngine...\n";
+  try {
+    auto result = benchmark_engine(create_engine(engine_type, particle_count, threads), std::string(argv[1]), test_data_file, warmup_steps, work_steps);
+    results.push_back(result);
+  } catch (const std::exception& e) {
+    std::cout << "  ERROR: " << e.what() << "\n";
+  }
+
+  // Print results
+  std::cout << "\n### Results Summary ###\n";
+  for (const auto& result : results) {
+    result.metrics.print(result.name);
+  }
+
   return 0;
 }

@@ -27,7 +27,7 @@ class BaseEngine {
   }
 
  public:
-  BaseEngine(const std::string& n, const long long& amount) : name(n), spheresAmount(amount) {}
+  BaseEngine(const std::string& n, size_t amount) : name(n), spheresAmount(amount) {}
   virtual ~BaseEngine() = default;
 
   virtual void init_from_text(const std::string& filename) = 0;

@@ -19,17 +19,14 @@ void BinaryEngine::init_from_text(const std::string& filename) {
     if (fstat(mmap_fd, &st) != 0) { close(mmap_fd); mmap_fd = -1; throw std::runtime_error("fstat failed"); }
     mmap_size = static_cast<size_t>(st.st_size);
 
-    if (mmap_size < sizeof(u_int64_t)) { close(mmap_fd); mmap_fd = -1; throw std::runtime_error("file too small"); }
+    if (mmap_size < sizeof(Particle)) { close(mmap_fd); mmap_fd = -1; throw std::runtime_error("file too small"); }
 
     // Здесь предполагаем, что файл - просто последовательность Particle (без заголовка)
     mmap_addr = mmap(nullptr, mmap_size, PROT_READ | PROT_WRITE, MAP_PRIVATE, mmap_fd, 0);
     if (mmap_addr == MAP_FAILED) { mmap_addr = nullptr; close(mmap_fd); mmap_fd = -1; throw std::runtime_error("mmap failed"); }
 
-
-    // Убедимся что размер кратен sizeof(Particle)
-    size_t expected = spheresAmount * sizeof(Particle);
-
-    if (mmap_size < expected) {
+        // Убедимся что размер кратен sizeof(Particle)
+    if (spheresAmount != mmap_size / sizeof(Particle)) {
         unmap_file();
         throw std::runtime_error("file size is not multiple of Particle size");
     }
@@ -38,7 +35,7 @@ void BinaryEngine::init_from_text(const std::string& filename) {
     // precalcMass: вычисляем в векторе
     precalcMass.resize(spheresAmount);
     for (size_t i = 0; i < spheresAmount; ++i) {
-        // безопасно обращаться к spheres[i] — это mapped memory (read-only), но mass читаем
+        // безопасно обращаться к spheres[i] — это mapped memory (read-only), но mass
         precalcMass[i] = 1.0 / spheres[i].mass;
     }
 }
@@ -54,7 +51,7 @@ void BinaryEngine::unmap_file() {
     }
     mmap_size = 0;
     spheres = nullptr;
-    spheresAmount = 0;
+    // spheresAmount = 0;
     precalcMass.clear();
 }
 
