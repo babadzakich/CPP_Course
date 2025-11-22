@@ -61,7 +61,7 @@ void SOAEngine::step(double dt) {
 }
 
 bool SOAEngine::checkCollision(const size_t& i, const size_t& j) {
-  Vec3 delta(x[i] - x[j], y[i] - y[j], z[i] - z[j]);
+  Vec3 delta = Vec3Util::minimum_image_delta(Vec3(x[i], y[i], z[i]),Vec3(x[j], y[j], z[j]));
   double distSquared = Vec3Util::lengthSq(delta);
   double radiusSum = radius[i] + radius[j];
   return distSquared <= radiusSum * radiusSum;

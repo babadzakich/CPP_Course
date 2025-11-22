@@ -67,8 +67,8 @@ void SpatHashEngine::step(double dt) {
                     if (it != grid.end()) {
                         for (size_t i : cell_bodies) {
                             for (size_t j : it->second) {
-                                if (checkCollision(spheres[cell_bodies[i]], spheres[cell_bodies[j]]))
-                                    resolveCollisions(spheres[cell_bodies[i]], spheres[cell_bodies[j]]);
+                                if (checkCollision(spheres[i], spheres[j]))
+                                    resolveCollisions(spheres[i], spheres[j]);
                             }
                         }
                     }
@@ -96,7 +96,7 @@ ConservationValues SpatHashEngine::compute_conserv() const {
 }
 
 bool SpatHashEngine::checkCollision(const Particle& p1, const Particle& p2) {
-  Vec3 delta = p1.pos - p2.pos;
+  Vec3 delta = Vec3Util::minimum_image_delta(p1.pos, p2.pos);
   double distSquared = Vec3Util::lengthSq(delta);
   double radiusSum = p1.radius + p2.radius;
   return distSquared <= radiusSum * radiusSum;

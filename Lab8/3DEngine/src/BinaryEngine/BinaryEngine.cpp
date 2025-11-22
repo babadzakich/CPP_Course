@@ -73,7 +73,7 @@ void BinaryEngine::step(double dt) {
 }
 
 bool BinaryEngine::checkCollision(const Particle& p1, const Particle& p2) {
-  Vec3 delta = p1.pos - p2.pos;
+  Vec3 delta = Vec3Util::minimum_image_delta(p1.pos,p2.pos);
   double distSquared = Vec3Util::lengthSq(delta);
   double radiusSum = p1.radius + p2.radius;
   return distSquared <= radiusSum * radiusSum;
