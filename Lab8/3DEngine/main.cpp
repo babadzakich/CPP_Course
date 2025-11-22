@@ -14,7 +14,6 @@
 #include "CLI/CLI.hpp"
 
 std::unique_ptr<BaseEngine> create_engine(const std::string& engine_type, const size_t amount, const size_t threads) {
-    std::cout << "Creating engine of type: " << engine_type << " with amount: " << amount << "\n";
   if (engine_type == "simple") {
     return std::make_unique<SimpleEngine>(amount);
   } else if (engine_type == "binary") {
@@ -30,33 +29,6 @@ std::unique_ptr<BaseEngine> create_engine(const std::string& engine_type, const 
   }
 }
 
-// Generate test data
-void generate_test_data(const std::string& filename, size_t particle_count, unsigned seed = 42) {
-  std::mt19937 rng(seed);
-  std::uniform_real_distribution<double> pos_dist(-100.0, 100.0);
-  std::uniform_real_distribution<double> vel_dist(-10.0, 10.0);
-  std::uniform_real_distribution<double> mass_dist(1.0, 5.0);
-  std::uniform_real_distribution<double> radius_dist(0.5, 2.0);
-
-  std::ofstream file(filename, std::ios::binary);
-  if (!file.is_open()) {
-    throw std::runtime_error("Failed to create test file");
-  }
-
-  for (size_t i = 0; i < particle_count; ++i) {
-    Particle p;
-    p.id = i;
-    p.pos = Vec3(pos_dist(rng), pos_dist(rng), pos_dist(rng));
-    p.vel = Vec3(vel_dist(rng), vel_dist(rng), vel_dist(rng));
-    p.mass = mass_dist(rng);
-    p.radius = radius_dist(rng);
-    // file << i << " " << p.pos.x << " " << p.pos.y << " " << p.pos.z << " "
-    //      << p.vel.x << " " << p.vel.y << " " << p.vel.z << " "
-    //      << p.mass << " " << p.radius << "\n";
-    file.write(reinterpret_cast<const char*>(&p), sizeof(Particle));
-  }
-}
-
 // Benchmark engine
 struct BenchResult {
   std::string name;
@@ -64,7 +36,8 @@ struct BenchResult {
 };
 
 BenchResult benchmark_engine(std::unique_ptr<BaseEngine> engine, const std::string& name,
-                            const std::string& test_file, size_t warmup_steps, size_t work_steps) {
+                            const std::string& test_file, size_t warmup_steps, size_t work_steps
+                            , const double dt) {
   BenchResult result{name, {}};
 
   // Init timing
@@ -74,8 +47,19 @@ BenchResult benchmark_engine(std::unique_ptr<BaseEngine> engine, const std::stri
   double init_time = std::chrono::duration<double>(end - start).count();
   result.metrics.add_init(init_time);
 
+  // std::cout << "Test stuff" << std::endl;
+  // for (auto p : engine->snapshot()) {
+  //   std::cout << p.id << " " << p.pos.x << " " << p.pos.y
+  //   << p.pos.z << " " << p.vel.x << " " << p.vel.y << " " << p.vel.z
+  //   << " " << p.mass << " " << p.radius << "\n";
+  // }
+
+  std::cout << "--Init Conserv Values--" << std::endl;
+  auto conserv_start = engine->compute_conserv();
+  std::cout << "  Energy: " << conserv_start.total_kinetic_energy << " J\n";
+  std::cout << "  Momentum magnitude: " << conserv_start.total_momentum_magnitude << " kg*m/s\n";
+
   // Warmup
-  const double dt = 0.016; // ~60 FPS
   for (size_t i = 0; i < warmup_steps; ++i) {
     start = std::chrono::high_resolution_clock::now();
     engine->step(dt);
@@ -94,7 +78,7 @@ BenchResult benchmark_engine(std::unique_ptr<BaseEngine> engine, const std::stri
   }
 
   // Save timing
-  std::string output_file = "output_" + name + ".bin";
+  std::string output_file = "output_" + name + (name == "simple" ? ".txt" : ".bin");
   start = std::chrono::high_resolution_clock::now();
   engine->save_to_text(output_file);
   end = std::chrono::high_resolution_clock::now();
@@ -102,6 +86,7 @@ BenchResult benchmark_engine(std::unique_ptr<BaseEngine> engine, const std::stri
   result.metrics.add_save(save_time);
 
   // Validation
+  std::cout << "--Final Conserv Values--" << std::endl;
   auto conserv = engine->compute_conserv();
   std::cout << "  Energy: " << conserv.total_kinetic_energy << " J\n";
   std::cout << "  Momentum magnitude: " << conserv.total_momentum_magnitude << " kg*m/s\n";
@@ -126,8 +111,12 @@ int main(int argc, char* argv[]) {
 
   size_t warmup_steps = 10;
   app.add_option("-w, --warmup", warmup_steps, "Number of warmup steps")->default_val(warmup_steps);
+
   size_t work_steps = 100;
   app.add_option("-W, --work", work_steps, "Number of work steps")->default_val(work_steps);
+
+  double dt = 0.016;
+  app.add_option("-d, --dt", dt, "Time step for each simulation step")->default_val(dt);
 
   CLI11_PARSE(app, argc, argv);
 
@@ -137,10 +126,10 @@ int main(int argc, char* argv[]) {
 
   std::vector<BenchResult> results;
 
-  // SimpleEngine
-  std::cout << "\n> Benchmarking SimpleEngine...\n";
+
+  std::cout << "\n> Benchmarking " << engine_type << " Engine\n";
   try {
-    auto result = benchmark_engine(create_engine(engine_type, particle_count, threads), std::string(argv[1]), test_data_file, warmup_steps, work_steps);
+    auto result = benchmark_engine(create_engine(engine_type, particle_count, threads), engine_type, test_data_file, warmup_steps, work_steps, dt);
     results.push_back(result);
   } catch (const std::exception& e) {
     std::cout << "  ERROR: " << e.what() << "\n";

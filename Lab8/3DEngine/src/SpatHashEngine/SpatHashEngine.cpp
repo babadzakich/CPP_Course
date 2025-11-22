@@ -6,8 +6,6 @@ void SpatHashEngine::init_from_text(const std::string& filename) {
     std::ifstream file(filename, std::ios::binary);
     if (!file.is_open()) throw std::runtime_error("Couldn`t open config file");
 
-    file.read(reinterpret_cast<char*>(&spheresAmount), sizeof(spheresAmount));
-
     spheres.resize(spheresAmount);
 
     file.read(reinterpret_cast<char*>(spheres.data()), spheresAmount * sizeof(Particle));
@@ -30,7 +28,6 @@ void SpatHashEngine::init_from_text(const std::string& filename) {
 void SpatHashEngine::save_to_text(const std::string& filename) {
     std::ofstream file(filename, std::ios::binary);
 
-    file.write(reinterpret_cast<const char*>(&spheresAmount), sizeof(spheresAmount));
     file.write(reinterpret_cast<const char*>(spheres.data()), spheresAmount * sizeof(Particle));
 }
 
@@ -106,8 +103,17 @@ bool SpatHashEngine::checkCollision(const Particle& p1, const Particle& p2) {
 }
 
 void SpatHashEngine::resolveCollisions(Particle& p1, Particle& p2) {
-  // Вектор от центра p2 к центру p1
-  Vec3 normal = Vec3Util::normalize(p1.pos - p2.pos);
+  Vec3 delta = Vec3Util::minimum_image_delta(p1.pos, p2.pos);
+    double dist = Vec3Util::length(delta);
+
+    Vec3 normal;
+  if (dist > 1e-12) {
+      normal = delta / dist; // нормализованный вектор
+  } else {
+      // если центры совпадают, выбираем произвольный нормализованный вектор
+      normal = Vec3(1.0, 0.0, 0.0);
+      dist = 0;
+  }
   // Относительная скорость
   Vec3 relativevel = p1.vel - p2.vel;
 
@@ -132,9 +138,7 @@ void SpatHashEngine::resolveCollisions(Particle& p1, Particle& p2) {
   p2.vel = p2.vel - impulse * (1/p2.mass);
 
   // Разделяем сферы, если они пересекаются
-  Vec3 diff = p1.pos - p2.pos;
-  double distance = Vec3Util::length(diff);
-  double overlap = (p1.radius + p2.radius) - distance;
+  double overlap = (p1.radius + p2.radius) - dist;
 
   if (overlap > 0) {
     Vec3 separation = normal * (overlap / 2);

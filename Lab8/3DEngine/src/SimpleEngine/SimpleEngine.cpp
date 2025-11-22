@@ -7,13 +7,12 @@ void SimpleEngine::init_from_text(const std::string& filename) {
     throw std::runtime_error("Could not open file for reading: " + filename);
   }
   spheres.clear();
-
+  int id;
   double x, y, z, vx, vy, vz, mass, radius;
   for (int i = 0; i < spheresAmount; i++) {
-    if (!(file >> x >> y >> z >> vx >> vy >> vz >> mass >> radius))
+    if (!(file >> id >> x >> y >> z >> vx >> vy >> vz >> mass >> radius))
       throw std::runtime_error("Not enough spheres");
-    Particle p(static_cast<int>(spheres.size()), mass, radius, Vec3{x, y, z}, Vec3{vx, vy, vz});
-    p.id = static_cast<int>(spheres.size());
+    Particle p(id, mass, radius, Vec3{x, y, z}, Vec3{vx, vy, vz});
     spheres.push_back(p);
   }
   calculate_conservation();
@@ -25,7 +24,7 @@ void SimpleEngine::save_to_text(const std::string& filename) {
     throw std::runtime_error("Could not open file for writing: " + filename);
   }
   for (const auto& p : spheres) {
-    file << p.pos.x << " " << p.pos.y << " " << p.pos.z << " " << p.vel.x << " " << p.vel.y << " " << p.vel.z << " "
+    file << p.id << " " << p.pos.x << " " << p.pos.y << " " << p.pos.z << " " << p.vel.x << " " << p.vel.y << " " << p.vel.z << " "
          << p.mass << " " << p.radius << "\n";
   }
 }
@@ -49,7 +48,8 @@ ConservationValues SimpleEngine::compute_conserv() const {
 
 void SimpleEngine::step(double dt) {
   for (auto& p : spheres) {
-    p.pos = Vec3Util::wrap_pos(p.pos + (p.vel * dt));
+    // p.pos = Vec3Util::wrap_pos(p.pos + (p.vel * dt));
+    p.pos += p.vel * dt;
   }
 
   for (size_t i = 0; i < spheres.size(); ++i) {

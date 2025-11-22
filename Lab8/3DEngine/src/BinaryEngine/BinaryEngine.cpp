@@ -80,9 +80,21 @@ bool BinaryEngine::checkCollision(const Particle& p1, const Particle& p2) {
 }
 
 void BinaryEngine::resolveCollisions(Particle& p1, Particle& p2) {
+  Vec3 delta = Vec3Util::minimum_image_delta(p1.pos, p2.pos);
+    double dist = Vec3Util::length(delta);
+    double mp1 = precalcMass[p1.id], mp2 = precalcMass[p2.id];
+
   // Вектор от центра p2 к центру p1
-  Vec3 normal = Vec3Util::normalize(p1.pos - p2.pos);
-  double mp1 = precalcMass[p1.id], mp2 = precalcMass[p2.id];
+  Vec3 normal;
+  if (dist > 1e-12) {
+      normal = delta / dist; // нормализованный вектор
+  } else {
+      // если центры совпадают, выбираем произвольный нормализованный вектор
+      normal = Vec3(1.0, 0.0, 0.0);
+      dist = 0;
+  }
+
+
   // Относительная скорость
   Vec3 relativevel = p1.vel - p2.vel;
 
@@ -107,14 +119,15 @@ void BinaryEngine::resolveCollisions(Particle& p1, Particle& p2) {
   p2.vel = p2.vel - impulse * (mp2);
 
   // Разделяем сферы, если они пересекаются
-  Vec3 diff = p1.pos - p2.pos;
-  double distance = Vec3Util::length(diff);
-  double overlap = (p1.radius + p2.radius) - distance;
+  double overlap = (p1.radius + p2.radius) - dist;
 
-  if (overlap > 0) {
+  if (overlap > 0.0) {
     Vec3 separation = normal * (overlap / 2);
     p1.pos = p1.pos + separation;
     p2.pos = p2.pos - separation;
+
+    p1.pos = Vec3Util::wrap_pos(p1.pos);
+    p2.pos = Vec3Util::wrap_pos(p2.pos);
   }
 }
 

@@ -9,8 +9,6 @@ void SOAEngine::init_from_text(const std::string& filename) {
   }
   spheres.clear();
 
-  file.read(reinterpret_cast<char*>(&spheresAmount), sizeof(spheresAmount));
-
   spheres.resize(spheresAmount);
   file.read(reinterpret_cast<char*>(spheres.data()), spheresAmount * sizeof(Particle));
   x.resize(spheresAmount); y.resize(spheresAmount); z.resize(spheresAmount);
@@ -43,7 +41,6 @@ void SOAEngine::save_to_text(const std::string& filename) {
         }
 
         std::ofstream file(filename, std::ios::binary);
-        file.write(reinterpret_cast<const char*>(&spheresAmount), sizeof(spheresAmount));
         file.write(reinterpret_cast<const char*>(spheres.data()), spheresAmount * sizeof(Particle));
 }
 
@@ -77,7 +74,18 @@ void SOAEngine::resolveCollisions(size_t& i, size_t& j) {
     Vec3 vel_i(vx[i], vy[i], vz[i]);
     Vec3 vel_j(vx[j], vy[j], vz[j]);
 
-    Vec3 normal = Vec3Util::normalize(pos_i - pos_j);
+    Vec3 delta = Vec3Util::minimum_image_delta(pos_i, pos_j);
+    double dist = Vec3Util::length(delta);
+
+    // Вектор от центра p2 к центру p1
+    Vec3 normal;
+    if (dist > 1e-12) {
+        normal = delta / dist; // нормализованный вектор
+    } else {
+        // если центры совпадают, выбираем произвольный нормализованный вектор
+        normal = Vec3(1.0, 0.0, 0.0);
+        dist = 0;
+    }
     double mp1 = inv_mass[i], mp2 = inv_mass[j];
 
     // Относительная скорость
@@ -104,9 +112,7 @@ void SOAEngine::resolveCollisions(size_t& i, size_t& j) {
     vel_j = vel_j - impulse * mp2;
 
     // Разделяем сферы, если они пересекаются
-    Vec3 diff = pos_i - pos_j;
-    double distance = Vec3Util::length(diff);
-    double overlap = (radius[i] + radius[j]) - distance;
+    double overlap = (radius[i] + radius[j]) - dist;
 
     if (overlap > 0) {
       Vec3 separation = normal * (overlap / 2);

@@ -43,6 +43,13 @@ install(TARGETS generator
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
+add_executable(transformer transformer.cpp)
+target_link_libraries(transformer PRIVATE 3DEngine)
+
+install(TARGETS transformer
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
+
 set (DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/docs)
 set (DOXYGEN_EXTRACT_ALL YES)
 
