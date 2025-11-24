@@ -46,26 +46,80 @@ void MultithreadEngine::step(double dt) {
     threads.clear();
   }
 
-  // Collision detection and resolution (need synchronization)
-  for (size_t i = 0; i < spheresAmount; ++i) {
-    for (size_t j = i + 1; j < spheresAmount; ++j) {
-      if (checkCollision(spheres[i], spheres[j])) {
-        resolveCollisions(spheres[i], spheres[j]);
+  const size_t batch_size = 50;  // Обрабатываем по 50 сфер за раз
+
+  for (size_t batch_start = 0; batch_start < spheresAmount; batch_start += batch_size) {
+    size_t batch_end = std::min(batch_start + batch_size, spheresAmount);
+
+    // Создаём список всех пар в этом батче
+    struct PairIndex {
+      size_t i, j;
+    };
+    std::vector<PairIndex> pairs;
+
+    for (size_t i = batch_start; i < batch_end; ++i) {
+      for (size_t j = i + 1; j < spheresAmount; ++j) {
+        pairs.push_back({i, j});
       }
     }
+
+    // Если пар мало, обрабатываем последовательно
+    if (pairs.size() < num_threads * 2) {
+      for (const auto& p : pairs) {
+        if (checkCollision(spheres[p.i], spheres[p.j])) {
+          resolveCollisions(spheres[p.i], spheres[p.j]);
+        }
+      }
+      continue;
+    }
+
+    std::atomic<size_t> current_pair{0};
+
+    for (size_t t = 0; t < num_threads; ++t) {
+      threads.emplace_back([this, &current_pair, &pairs]() {
+        while (true) {
+          size_t idx = current_pair.fetch_add(1, std::memory_order_relaxed);
+          if (idx >= pairs.size()) break;
+
+          size_t i = pairs[idx].i;
+          size_t j = pairs[idx].j;
+
+          if (checkCollision(spheres[i], spheres[j])) {
+            resolveCollisions(spheres[i], spheres[j]);
+          }
+        }
+      });
+    }
+
+    for (auto& th : threads) {
+      th.join();
+    }
+    threads.clear();
   }
 }
 
 bool MultithreadEngine::checkCollision(const Particle& p1, const Particle& p2) {
-  Vec3 delta = p1.pos - p2.pos;
+  Vec3 delta = Vec3Util::minimum_image_delta(p1.pos, p2.pos);
   double distSquared = Vec3Util::lengthSq(delta);
   double radiusSum = p1.radius + p2.radius;
   return distSquared <= radiusSum * radiusSum;
 }
 
 void MultithreadEngine::resolveCollisions(Particle& p1, Particle& p2) {
-  Vec3 normal = Vec3Util::normalize(p1.pos - p2.pos);
+  Vec3 delta = Vec3Util::minimum_image_delta(p1.pos, p2.pos);
+    double dist = Vec3Util::length(delta);
+
+  Vec3 normal;
+  if (dist > 1e-12) {
+      normal = delta / dist;
+  } else {
+      normal = Vec3(1.0, 0.0, 0.0);
+      dist = 0;
+  }
+
+
   Vec3 relativevel = p1.vel - p2.vel;
+
   double velocityAlongNormal = Vec3Util::dot(relativevel, normal);
 
   if (velocityAlongNormal > 0) {
@@ -73,6 +127,7 @@ void MultithreadEngine::resolveCollisions(Particle& p1, Particle& p2) {
   }
 
   double restitution = 1.0;
+
   double j = -(1 + restitution) * velocityAlongNormal;
   j /= (1 / p1.mass + 1 / p2.mass);
 
@@ -80,14 +135,15 @@ void MultithreadEngine::resolveCollisions(Particle& p1, Particle& p2) {
   p1.vel = p1.vel + impulse * (1 / p1.mass);
   p2.vel = p2.vel - impulse * (1 / p2.mass);
 
-  Vec3 diff = p1.pos - p2.pos;
-  double distance = Vec3Util::length(diff);
-  double overlap = (p1.radius + p2.radius) - distance;
+  double overlap = (p1.radius + p2.radius) - dist;
 
-  if (overlap > 0) {
+  if (overlap > 0.0) {
     Vec3 separation = normal * (overlap / 2);
     p1.pos = p1.pos + separation;
     p2.pos = p2.pos - separation;
+
+    p1.pos = Vec3Util::wrap_pos(p1.pos);
+    p2.pos = Vec3Util::wrap_pos(p2.pos);
   }
 }
 

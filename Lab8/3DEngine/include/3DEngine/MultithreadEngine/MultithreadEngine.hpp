@@ -3,6 +3,7 @@
 #include <3DEngine/BaseEngine.hpp>
 #include <thread>
 #include <vector>
+#include <condition_variable>
 
 class MultithreadEngine : public BaseEngine {
     size_t num_threads;
