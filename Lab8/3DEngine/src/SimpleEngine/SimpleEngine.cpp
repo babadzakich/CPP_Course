@@ -72,41 +72,32 @@ void SimpleEngine::resolveCollisions(Particle& p1, Particle& p2) {
   Vec3 delta = Vec3Util::minimum_image_delta(p1.pos, p2.pos);
     double dist = Vec3Util::length(delta);
 
-  // Вектор от центра p2 к центру p1
   Vec3 normal;
   if (dist > 1e-12) {
-      normal = delta / dist; // нормализованный вектор
+      normal = delta / dist;
   } else {
-      // если центры совпадают, выбираем произвольный нормализованный вектор
       normal = Vec3(1.0, 0.0, 0.0);
       dist = 0;
   }
 
 
-  // Относительная скорость
   Vec3 relativevel = p1.vel - p2.vel;
 
-  // Скорость сближения вдоль нормали
   double velocityAlongNormal = Vec3Util::dot(relativevel, normal);
 
-  // Если сферы расходятся, столкновения нет
   if (velocityAlongNormal > 0) {
     return;
   }
 
-  // Коэффициент восстановления (1.0 для абсолютно упругого столкновения)
   double restitution = 1.0;
 
-  // Импульс столкновения
   double j = -(1 + restitution) * velocityAlongNormal;
   j /= (1 / p1.mass + 1 / p2.mass);
 
-  // Применяем импульс
   Vec3 impulse = normal * j;
   p1.vel = p1.vel + impulse * (1 / p1.mass);
   p2.vel = p2.vel - impulse * (1 / p2.mass);
 
-  // Разделяем сферы, если они пересекаются
   double overlap = (p1.radius + p2.radius) - dist;
 
   if (overlap > 0.0) {
