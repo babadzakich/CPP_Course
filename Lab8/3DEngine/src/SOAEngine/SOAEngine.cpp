@@ -49,6 +49,10 @@ void SOAEngine::step(double dt) {
         x[i] += vx[i] * dt;
         y[i] += vy[i] * dt;
         z[i] += vz[i] * dt;
+        Vec3 pos = Vec3Util::wrap_pos(Vec3(x[i], y[i], z[i]));
+        x[i] = pos.x;
+        y[i] = pos.y;
+        z[i] = pos.z;
     }
 
     for (size_t i = 0; i < spheresAmount; i++) {
@@ -67,7 +71,7 @@ bool SOAEngine::checkCollision(const size_t& i, const size_t& j) {
   return distSquared <= radiusSum * radiusSum;
 }
 
-void SOAEngine::resolveCollisions(size_t& i, size_t& j) {
+void SOAEngine::resolveCollisions(size_t i, size_t j) {
     // Zero-copy оптимизация: работаем напрямую с индексами и SOA массивами
     Vec3 pos_i(x[i], y[i], z[i]);
     Vec3 pos_j(x[j], y[j], z[j]);
@@ -118,6 +122,9 @@ void SOAEngine::resolveCollisions(size_t& i, size_t& j) {
       Vec3 separation = normal * (overlap / 2);
       pos_i = pos_i + separation;
       pos_j = pos_j - separation;
+
+      pos_i = Vec3Util::wrap_pos(pos_i);
+      pos_j = Vec3Util::wrap_pos(pos_j);
     }
 
     // Записываем обновленные значения обратно в SOA массивы

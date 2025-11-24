@@ -7,8 +7,8 @@
 #include <3DEngine/Utility/Particle.hpp>
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        std::cerr << "Usage: " << argv[0] << "<particles amount> <bin or simple>\n";
+    if (argc != 4) {
+        std::cerr << "Usage: " << argv[0] << "<particles amount> <bin or simple> <filename>\n";
         return EXIT_FAILURE;
     }
     std::mt19937 rng(std::chrono::steady_clock::now().time_since_epoch().count());
@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
   std::uniform_real_distribution<double> radius_dist(0.5, 2.0);
     const size_t particle_count = std::stoul(argv[1]);
     const bool binary = std::string(argv[2]) == "bin";
-    std::string filename = std::to_string(particle_count) + "_particles" + (binary ? ".bin" : ".txt");
+    std::string filename = std::to_string(particle_count) + std::string(argv[3]) + (binary ? ".bin" : ".txt");
   std::ofstream file(filename, binary ? std::ios::binary : std::ios::out);
   if (!file.is_open()) {
     throw std::runtime_error("Failed to create test file");

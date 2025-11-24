@@ -51,7 +51,7 @@ void BinaryEngine::unmap_file() {
     }
     mmap_size = 0;
     spheres = nullptr;
-    // spheresAmount = 0;
+
     precalcMass.clear();
 }
 
@@ -62,8 +62,10 @@ void BinaryEngine::save_to_text(const std::string& filename) {
 }
 
 void BinaryEngine::step(double dt) {
-  for (size_t i = 0; i < spheresAmount; i++)
+  for (size_t i = 0; i < spheresAmount; i++) {
     spheres[i].pos += spheres[i].vel * dt;
+    spheres[i].pos = Vec3Util::wrap_pos(spheres[i].pos);
+  }
   for (size_t i = 0; i < spheresAmount; i++) {
     for (size_t j = i + 1; j < spheresAmount; j++) {
       if (checkCollision(spheres[i], spheres[j]))

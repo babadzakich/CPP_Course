@@ -97,7 +97,7 @@ BenchResult benchmark_engine(std::unique_ptr<BaseEngine> engine, const std::stri
 int main(int argc, char* argv[]) {
   CLI::App app{"3D Engine Benchmarking Tool"};
 
-  std::string engine_type = "simple";
+  std::string engine_type;
   app.add_option("-e, --engine", engine_type, "Type of engine to benchmark (simple, binary, spat_hash, soa, multithread)")->required();
 
   size_t threads = std::thread::hardware_concurrency();
@@ -124,22 +124,18 @@ int main(int argc, char* argv[]) {
     throw std::invalid_argument("SimpleEngine does not support binary files.");
   }
 
-  std::vector<BenchResult> results;
+  BenchResult results;
 
 
   std::cout << "\n> Benchmarking " << engine_type << " Engine\n";
   try {
-    auto result = benchmark_engine(create_engine(engine_type, particle_count, threads), engine_type, test_data_file, warmup_steps, work_steps, dt);
-    results.push_back(result);
+    results = benchmark_engine(create_engine(engine_type, particle_count, threads), engine_type, test_data_file, warmup_steps, work_steps, dt);
   } catch (const std::exception& e) {
     std::cout << "  ERROR: " << e.what() << "\n";
   }
 
-  // Print results
-  std::cout << "\n### Results Summary ###\n";
-  for (const auto& result : results) {
-    result.metrics.print(result.name);
-  }
+  results.metrics.print(results.name);
+
 
   return 0;
 }

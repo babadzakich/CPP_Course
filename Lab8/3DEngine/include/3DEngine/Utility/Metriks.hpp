@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <iostream>
+#include <fstream>
 #include <numeric>
 #include <sstream>
 #include <vector>
@@ -27,28 +28,26 @@ struct Metrics {
   void add_save(double t) { save_times.push_back(t); }
 
   void print(const std::string& name) const {
-    auto stats = [](const std::vector<double>& v) {
-      if (v.empty())
-        return std::string("N/A");
-      double sum = std::accumulate(v.begin(), v.end(), 0.0);
-      double avg = sum / v.size();
-      double min = *std::min_element(v.begin(), v.end());
-      double max = *std::max_element(v.begin(), v.end());
-      double var = 0;
-      for (auto x : v)
-        var += (x - avg) * (x - avg);
-      var /= v.size();
+    std::string filename = name + "_benchmark_results.txt";
+    std::ofstream output(filename);
+    if (!output.is_open()) throw std::runtime_error("couldn`t open benchmark reuslts file " + filename);
 
-      std::ostringstream oss;
-      oss << std::fixed << std::setprecision(3) << "avg=" << avg * 1000 << "ms min=" << min * 1000
-          << "ms max=" << max * 1000 << "ms var=" << var * 1000000;
-      return oss.str();
-    };
+    output << std::fixed << std::setprecision(10);
 
-    std::cout << "\n=== " << name << " ===\n";
-    std::cout << "Init: " << stats(init_times) << "\n";
-    std::cout << "Warmup: " << stats(warmup_times) << "\n";
-    std::cout << "Work: " << stats(work_times) << "\n";
-    std::cout << "Save: " << stats(save_times) << "\n";
+      output << "---INIT TIME---" << '\n';
+    for (auto& time : init_times)
+      output << time << '\n';
+
+      output << "---WARMUP TIME---" << '\n';
+    for (auto& time : warmup_times)
+      output << time << '\n';
+
+      output << "---WORK TIME---" << '\n';
+    for (auto& time : work_times)
+      output << time << '\n';
+
+      output << "---SAVE TIME---" << '\n';
+    for (auto& time : save_times)
+      output << time << '\n';
   }
 };

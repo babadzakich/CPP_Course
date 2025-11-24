@@ -16,13 +16,6 @@ void SpatHashEngine::init_from_text(const std::string& filename) {
     }
 
     cell_size *= 3.0;
-
-    // Инициализируем сетку один раз
-    grid.clear();
-    for (size_t i = 0; i < spheres.size(); ++i) {
-        int64_t cell = get_cell(spheres[i].pos.x, spheres[i].pos.y, spheres[i].pos.z);
-        grid[cell].push_back(i);
-    }
 }
 
 void SpatHashEngine::save_to_text(const std::string& filename) {
@@ -34,18 +27,16 @@ void SpatHashEngine::save_to_text(const std::string& filename) {
 void SpatHashEngine::step(double dt) {
     for (auto& s : spheres) {
         s.pos += s.vel * dt;
+        s.pos = Vec3Util::wrap_pos(s.pos);
     }
 
-    // Перерассчитываем сетку
     grid.clear();
     for (size_t i = 0; i < spheres.size(); ++i) {
         int64_t cell = get_cell(spheres[i].pos.x, spheres[i].pos.y, spheres[i].pos.z);
         grid[cell].push_back(i);
     }
 
-    // Проверяем коллизии только в соседних ячейках
     for (const auto& [cell_key, cell_bodies] : grid) {
-            // Внутри ячейки
         for (size_t i = 0; i < cell_bodies.size(); i++) {
             for (size_t j = i + 1; j < cell_bodies.size(); j++) {
                 if (checkCollision(spheres[cell_bodies[i]], spheres[cell_bodies[j]]))
@@ -108,36 +99,28 @@ void SpatHashEngine::resolveCollisions(Particle& p1, Particle& p2) {
 
     Vec3 normal;
   if (dist > 1e-12) {
-      normal = delta / dist; // нормализованный вектор
+      normal = delta / dist;
   } else {
-      // если центры совпадают, выбираем произвольный нормализованный вектор
       normal = Vec3(1.0, 0.0, 0.0);
       dist = 0;
   }
-  // Относительная скорость
   Vec3 relativevel = p1.vel - p2.vel;
 
-  // Скорость сближения вдоль нормали
   double velocityAlongNormal = Vec3Util::dot(relativevel, normal);
 
-  // Если сферы расходятся, столкновения нет
   if (velocityAlongNormal > 0) {
     return;
   }
 
-  // Коэффициент восстановления (1.0 для абсолютно упругого столкновения)
   double restitution = 1.0;
 
-  // Импульс столкновения
   double j = -(1 + restitution) * velocityAlongNormal;
   j /= (1/p1.mass + 1/p2.mass);
 
-  // Применяем импульс
   Vec3 impulse = normal * j;
   p1.vel = p1.vel + impulse * (1/p1.mass);
   p2.vel = p2.vel - impulse * (1/p2.mass);
 
-  // Разделяем сферы, если они пересекаются
   double overlap = (p1.radius + p2.radius) - dist;
 
   if (overlap > 0) {

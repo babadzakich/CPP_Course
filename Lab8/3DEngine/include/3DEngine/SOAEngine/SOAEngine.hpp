@@ -8,7 +8,7 @@ class SOAEngine : public BaseEngine {
     std::vector<double> mass, radius;
     std::vector<double> inv_mass;
 
-    void resolveCollisions(size_t& a, size_t& b);
+    void resolveCollisions(size_t a, size_t b);
     bool checkCollision(const size_t& a, const size_t& b);
 public:
 SOAEngine(size_t amount) : BaseEngine("soa", amount) {}

@@ -10,7 +10,6 @@ void MultithreadEngine::init_from_text(const std::string& filename) {
   }
   spheres.clear();
 
-  file.read(reinterpret_cast<char*>(&spheresAmount), sizeof(spheresAmount));
   spheres.resize(spheresAmount);
   file.read(reinterpret_cast<char*>(spheres.data()), spheresAmount * sizeof(Particle));
 }
@@ -20,30 +19,32 @@ void MultithreadEngine::save_to_text(const std::string& filename) {
   if (!file.is_open()) {
     throw std::runtime_error("Could not open file for writing: " + filename);
   }
-  file.write(reinterpret_cast<const char*>(&spheresAmount), sizeof(spheresAmount));
   file.write(reinterpret_cast<const char*>(spheres.data()), spheresAmount * sizeof(Particle));
 }
 
 void MultithreadEngine::step(double dt) {
-  // Update positions in parallel
-  size_t chunk_size = (spheresAmount + num_threads - 1) / num_threads;
   std::vector<std::thread> threads;
+  // Update positions in parallel
+  {
+    size_t chunk_size = (spheresAmount + num_threads - 1) / num_threads;
 
-  // Position update
-  for (size_t t = 0; t < num_threads; ++t) {
-    threads.emplace_back([this, t, chunk_size, dt]() {
-      size_t start = t * chunk_size;
-      size_t end = std::min(start + chunk_size, spheresAmount);
-      for (size_t i = start; i < end; ++i) {
-        spheres[i].pos += spheres[i].vel * dt;
-      }
-    });
-  }
+    // Position update
+    for (size_t t = 0; t < num_threads; ++t) {
+      threads.emplace_back([this, t, chunk_size, dt]() {
+        size_t start = t * chunk_size;
+        size_t end = std::min(start + chunk_size, spheresAmount);
+        for (size_t i = start; i < end; ++i) {
+          spheres[i].pos += spheres[i].vel * dt;
+          spheres[i].pos = Vec3Util::wrap_pos(spheres[i].pos);
+        }
+      });
+    }
 
-  for (auto& th : threads) {
-    th.join();
+    for (auto& th : threads) {
+      th.join();
+    }
+    threads.clear();
   }
-  threads.clear();
 
   // Collision detection and resolution (need synchronization)
   for (size_t i = 0; i < spheresAmount; ++i) {

@@ -48,8 +48,8 @@ ConservationValues SimpleEngine::compute_conserv() const {
 
 void SimpleEngine::step(double dt) {
   for (auto& p : spheres) {
-    // p.pos = Vec3Util::wrap_pos(p.pos + (p.vel * dt));
-    p.pos += p.vel * dt;
+    p.pos = Vec3Util::wrap_pos(p.pos + (p.vel * dt));
+    // p.pos += p.vel * dt;
   }
 
   for (size_t i = 0; i < spheres.size(); ++i) {
