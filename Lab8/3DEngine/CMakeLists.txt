@@ -3,11 +3,16 @@ add_library(3DEngine STATIC
     "src/BinaryEngine/BinaryEngine.cpp"
     "src/SpatHashEngine/SpatHashEngine.cpp"
     "src/SOAEngine/SOAEngine.cpp"
-    "src/MultithreadEngine/MultithreadEngine.cpp")
+    "src/MultithreadEngine/MultithreadEngine.cpp"
+    "src/SIMDEngine/SIMDEngine.cpp")
 
 find_package(Threads REQUIRED)
 find_package(CLI11 CONFIG REQUIRED)
 
+target_compile_options(3DEngine PRIVATE
+    -mavx2
+    -mfma
+)
 
 target_include_directories(3DEngine PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>

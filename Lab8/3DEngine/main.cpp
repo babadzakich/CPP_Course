@@ -3,6 +3,7 @@
 #include <3DEngine/SpatHashEngine/SpatHashEngine.hpp>
 #include <3DEngine/SOAEngine/SOAEngine.hpp>
 #include <3DEngine/MultithreadEngine/MultithreadEngine.hpp>
+#include <3DEngine/SIMDEngine/SIMDEngine.hpp>
 
 #include <iostream>
 #include <memory>
@@ -24,6 +25,8 @@ std::unique_ptr<BaseEngine> create_engine(const std::string& engine_type, const 
     return std::make_unique<SOAEngine>(amount);
   } else if (engine_type == "multithread") {
     return std::make_unique<MultithreadEngine>(amount, threads);
+  } else if (engine_type == "simd"){
+    return std::make_unique<SIMDEngine>(amount);
   } else {
     throw std::invalid_argument("Unknown engine type: " + engine_type);
   }
@@ -46,13 +49,6 @@ BenchResult benchmark_engine(std::unique_ptr<BaseEngine> engine, const std::stri
   auto end = std::chrono::high_resolution_clock::now();
   double init_time = std::chrono::duration<double>(end - start).count();
   result.metrics.add_init(init_time);
-
-  // std::cout << "Test stuff" << std::endl;
-  // for (auto p : engine->snapshot()) {
-  //   std::cout << p.id << " " << p.pos.x << " " << p.pos.y
-  //   << p.pos.z << " " << p.vel.x << " " << p.vel.y << " " << p.vel.z
-  //   << " " << p.mass << " " << p.radius << "\n";
-  // }
 
   std::cout << "--Init Conserv Values--" << std::endl;
   auto conserv_start = engine->compute_conserv();
@@ -78,7 +74,7 @@ BenchResult benchmark_engine(std::unique_ptr<BaseEngine> engine, const std::stri
   }
 
   // Save timing
-  std::string output_file = "output_" + name + (name == "simple" ? ".txt" : ".bin");
+  std::string output_file = "output_" + name + ((name == "simple" || name == "simd") ? ".txt" : ".bin");
   start = std::chrono::high_resolution_clock::now();
   engine->save_to_text(output_file);
   end = std::chrono::high_resolution_clock::now();
@@ -98,7 +94,7 @@ int main(int argc, char* argv[]) {
   CLI::App app{"3D Engine Benchmarking Tool"};
 
   std::string engine_type;
-  app.add_option("-e, --engine", engine_type, "Type of engine to benchmark (simple, binary, spat_hash, soa, multithread)")->required();
+  app.add_option("-e, --engine", engine_type, "Type of engine to benchmark (simple, binary, spat_hash, soa, multithread, simd)")->required();
 
   size_t threads = std::thread::hardware_concurrency();
   app.add_option("-t, --threads", threads, "Number of threads for multithreaded engine")->default_val(threads);
@@ -120,8 +116,12 @@ int main(int argc, char* argv[]) {
 
   CLI11_PARSE(app, argc, argv);
 
-  if (engine_type == "simple" && test_data_file.contains(".bin")) {
-    throw std::invalid_argument("SimpleEngine does not support binary files.");
+  if ((engine_type == "simple" || engine_type == "simd") && !test_data_file.contains(".txt")) {
+    throw std::invalid_argument(engine_type + "Engine only support txt files.");
+  }
+
+  if (!(engine_type == "simple" || engine_type == "simd") && !test_data_file.contains(".bin")) {
+    throw std::invalid_argument(engine_type + "Engine only support binary files.");
   }
 
   BenchResult results;
