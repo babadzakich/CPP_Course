@@ -18,3 +18,8 @@ queues:
     durability: "memory"
     order: "none"
     message_ttl: 10  # 10 секунд
+
+  - name: "test_queue"
+    durability: "disk"
+    order: "fifo"
+    message_ttl: 10 

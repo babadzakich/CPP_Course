@@ -77,3 +77,5 @@ environment_run.ps1.env
 environment_run.sh.env
 build/
 # End of https://www.toptal.com/developers/gitignore/api/c++,cmake,conan
+
+queues
