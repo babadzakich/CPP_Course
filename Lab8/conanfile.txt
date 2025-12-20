@@ -1,0 +1,9 @@
+[requires]
+cli11/2.6.0
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[layout]
+cmake_layout
