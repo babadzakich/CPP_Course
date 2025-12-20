@@ -2,22 +2,22 @@ queues:
   - name: "HighPriorityQueue"
     durability: "disk"
     order: "fifo"
-    message_ttl: 300  # 5 минут
+    message_ttl: 300
 
   - name: "LogsQueue"
     durability: "memory"
     order: "none"
-    message_ttl: 60  # 1 минута
+    message_ttl: 60
 
   - name: "EventsQueue"
     durability: "disk"
     order: "fifo"
-    message_ttl: 0  # Без TTL
+    message_ttl: 0
 
   - name: "TempQueue"
     durability: "memory"
     order: "none"
-    message_ttl: 10  # 10 секунд
+    message_ttl: 10
 
   - name: "test_queue"
     durability: "disk"

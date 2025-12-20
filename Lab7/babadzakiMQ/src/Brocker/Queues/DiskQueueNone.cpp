@@ -61,12 +61,11 @@ void DiskQueueNone::push(const Message& message) {
 bool DiskQueueNone::pop(Message& message) {
   std::lock_guard<std::mutex> lock(mutex_);
 
-  // Берем любой (первый попавшийся) файл - произвольный порядок
   std::filesystem::path any_file;
   for (const auto& entry : std::filesystem::directory_iterator(storage_dir_)) {
     if (entry.is_regular_file() && entry.path().extension() == ".msg") {
       any_file = entry.path();
-      break;  // Берем первый найденный
+      break;
     }
   }
 
@@ -74,7 +73,6 @@ bool DiskQueueNone::pop(Message& message) {
     return false;
   }
 
-  // Читаем файл
   std::ifstream file(any_file, std::ios::binary);
   if (!file) {
     return false;
@@ -83,10 +81,8 @@ bool DiskQueueNone::pop(Message& message) {
   std::vector<uint8_t> data((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
   file.close();
 
-  // Десериализуем
   message = Message::deserialize(data);
 
-  // Удаляем файл
   std::filesystem::remove(any_file);
 
   return true;
